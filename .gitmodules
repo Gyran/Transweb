@@ -1,0 +1,3 @@
+[submodule "PHP-Transmission-Class"]
+	path = PHP-Transmission-Class
+	url = https://github.com/brycied00d/PHP-Transmission-Class.git
