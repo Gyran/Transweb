@@ -1,6 +1,5 @@
 <?php
 
-require_once( dirname( __FILE__ ) . '/../../config/rpcconfig.php' );
 require_once( dirname( __FILE__ ) . '/../../PHP-Transmission-Class' . '/class/TransmissionRPC.class.php' );
 
 /** 
@@ -8,11 +7,6 @@ require_once( dirname( __FILE__ ) . '/../../PHP-Transmission-Class' . '/class/Tr
 */
 
 class JSONTransmissionRPC extends TransmissionRPC {
-
-	public function __construct( $url = 'http://localhost:9091/transmission/rpc', $username = null, $password = null, $return_as_array = false ){
-		return parent::__construct($url, $username, $password);
-	}
-
 	public function start ( $ids ){
 		return json_encode(parent::start($ids));	
 	}
