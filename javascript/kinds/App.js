@@ -1,28 +1,5 @@
-function injectScript(fname,initFunc) 
-{
-        var h = document.getElementsByTagName("head").item(0);
-        s = document.createElement("script");
-        if(initFunc)
-        {       
-                if(browser.isIE)
-                        s.onreadystatechange = function()
-                        {
-                                if((this.readyState == 'loaded') || (this.readyState == 'complete')) 
-                                        initFunc();
-                        }
-                else
-                        s.onload = initFunc;
-        }
-//      fname = fname + "?time=" + (new Date()).getTime();
-        if(s.setAttribute)
-                s.setAttribute('src', fname);
-        else
-                s.src = fname;
-        s.type = "text/javascript";
-        void (h.appendChild(s));
-}
 enyo.kind({
-	name: "TranswebApp",
+	name: "App",
 	kind: enyo.Control,
 	tag: "div",
 
@@ -34,7 +11,6 @@ enyo.kind({
 		{ name: "toolbar", kind: "Toolbar" },
 		{ name: "torrentsList", kind: "TorrentTable" },
 		{ name: "preferenceHolder", kind: "PreferenceHolder", showing: false }
-		//{ name: "bigLoading", kind: "BigLoading" },
 		//{ name: "smallLoading", kind: "SmallLoading" },
 		//{ name: "inspector", kind: "Inspector" }
 
@@ -52,6 +28,8 @@ enyo.kind({
 	update: function(){
 
 	},
+
+
 
 	initPlugins: function(){
 		enyo.forEach(this.plugins, this.initPlugin, this);

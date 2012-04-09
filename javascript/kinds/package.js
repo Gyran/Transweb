@@ -4,9 +4,10 @@ enyo.depends(
 	"Torrent.js",
 	"TorrentTableHead.js",
 	"TorrentTable.js",
+	"SelectFolderInput.js",
 	"AddTorrentPref.js",
 	"AddTorrentToolbarButton.js",
 	"Toolbar.js",
 	"PreferenceHolder.js",
-	"TranswebApp.js"
+	"App.js"
 );

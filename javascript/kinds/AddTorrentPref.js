@@ -5,15 +5,14 @@ enyo.kind({
 	content: "AddTorrentPref",
 
 	components: [
-		{ name: "downloadPath", kind: enyo.Input, placeholder: "Download path" },
-		{ tag: "br" },
+		{ name: "downloadPath", kind: "SelectFolderInput" },
 		{ name: "link", kind: enyo.Input, placeholder: "URL to torrent" },
 		{ kind: enyo.Button, content: "Add torrent", ontap: "addTorrentTap" }
 	],
 
 	create: function(){
 		this.inherited(arguments);
-		console.log("AddTorrentPref skapas");
+		this.$.downloadPath.setValue(enyo.application.transmissionSession.download_dir);
 	},
 
 	addTorrentTap: function(sender, e){

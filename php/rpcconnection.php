@@ -8,9 +8,8 @@ $defaultTorrentFields = array( "addedDate", "id", "name", "status", "doneDate", 
 
 try {
 	$rpc = new TransmissionRPC(TRANSMISSION_RPC_URL, TRANSMISSION_RPC_USERNAME, TRANSMISSION_RPC_PASSWORD);
-	$transmissionRunning = true;	
 } catch (Exception $e) {
-	$transmissionRunning = false;
+	die(json_encode(false));
 }
 
 //echo '<script type="text/javascript">console.log(';
@@ -19,8 +18,8 @@ switch ($_POST["method"]) {
 	case 'getAll':
 		echo json_encode($rpc->get(array(), $defaultTorrentFields));	
 		break;
-	case 'isRunning':
-		echo json_encode($transmissionRunning);
+	case 'TransmissionSession':
+		echo json_encode($rpc->sget());
 		break;
 	case 'addTorrentURL':
 		$torrent = file_get_contents($_POST["url"]);
@@ -29,7 +28,6 @@ switch ($_POST["method"]) {
 		echo '</pre>';
 		
 		break;
-
 
 	default:
 		echo '<pre>';
@@ -40,4 +38,6 @@ switch ($_POST["method"]) {
 		break;
 }
 //echo ');</script>';
+
+
 ?>

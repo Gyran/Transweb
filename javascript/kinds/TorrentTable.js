@@ -22,12 +22,13 @@ enyo.kind({
 	},
 
 	listTorrents: function(){
-		torrents = new enyo.Ajax({url: "php/rpcconnection.php", method: "post"}).response(this, "listTorrentsResponse").go({method: "getAll"});
+		new enyo.Ajax({url: "php/rpcconnection.php", method: "post"}).response(this, "listTorrentsResponse").go({method: "getAll"});
 	},
 
 	listTorrentsResponse: function(inSender, inResponse) {
+		enyo.application.torrents = inResponse.arguments.torrents;
 		this.destroyClientControls();
-		enyo.forEach(inResponse.arguments.torrents, this.addTorrentToList, this);
+		enyo.forEach(enyo.application.torrents, this.addTorrentToList, this);
 		this.render();
 	},
 
