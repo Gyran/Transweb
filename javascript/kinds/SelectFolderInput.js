@@ -50,6 +50,7 @@ enyo.kind({
 	},
 
 	folderTap: function( sender, e ) {
+		path = this.getValue().replace(/\/$/, "");
 		switch( sender.content ) {
 			case ".":
 				this.$.browser.hide();

@@ -20,10 +20,6 @@ enyo.kind({
 		// Is transmission running?
 		new enyo.Ajax({url: "php/rpcconnection.php", method: "post" }).response(this, "getTransmissionSession").go({method: "TransmissionSession"});
 
-		path = "/users/gyran/tv/glass";
-		n = path.replace( /([^\/]+?)\/[^\/]+?$/ , "$1" );
-		console.log(n);
-
 	},
 
 	init: function(){

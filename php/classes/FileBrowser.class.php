@@ -16,6 +16,11 @@ class FileBrowser {
 	}
 
 	public function getDirectories( $path = "" ) {
+
+		if( $path[ strlen( $path ) - 1 ] !== "/" ) {
+			$path = $path . "/";
+		}
+
 		if( $path === "" ) {
 			$path = $this->currentPath;
 		}
@@ -23,7 +28,6 @@ class FileBrowser {
 			throw new Exception("Path not in top path");
 		}
 
-		$path = $path . "/";
 		/* TODO symlink */
 		if( !is_dir( $path ) ) {
 			throw new Exception("Not a valid path");	
@@ -34,7 +38,7 @@ class FileBrowser {
 		}else{
 			$dirs = array( ".", ".." );
 		}
-		
+
 		if( ($dh = opendir($path)) ) {
 			while( $dir = readdir($dh) ) {
 				if( is_dir($path . $dir) ) {
