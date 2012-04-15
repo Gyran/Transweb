@@ -1,5 +1,5 @@
 enyo.depends(
+	"init.js",
 	"helpers.js",
-	"kinds/",
-	"init.js"
+	"kinds/"
 );

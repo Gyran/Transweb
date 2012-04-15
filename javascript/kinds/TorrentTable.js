@@ -12,7 +12,6 @@ enyo.kind({
 	},
 
 	update: function(){
-		console.log("updating torrentable");
 		this.listTorrents();
 	},
 
@@ -22,7 +21,8 @@ enyo.kind({
 	},
 
 	listTorrents: function(){
-		new enyo.Ajax({url: "php/rpcconnection.php", method: "post"}).response(this, "listTorrentsResponse").go({method: "getAll"});
+		this.bubble( "onStartLoading" );
+		new enyo.Ajax( { url: "php/rpcconnection.php", method: "post" } ).response( this, "listTorrentsResponse" ).go( { method: "getAll" } );
 	},
 
 	listTorrentsResponse: function(inSender, inResponse) {
@@ -30,20 +30,50 @@ enyo.kind({
 		this.destroyClientControls();
 		enyo.forEach(enyo.application.torrents, this.addTorrentToList, this);
 		this.render();
+		this.bubble( "onStopLoading" );
 	},
 
 	addTorrentToList: function(torrent){
-		this.createComponent({
-				kind: "Torrent",
-				container: this,
-				id: torrent.id,
-				torrentName: torrent.name,
-				uploadRatio: torrent.uploadRatio,
-				addedDate: torrent.addedDate,
-				rateUpload: torrent.rateUpload,
-				rateDownload: torrent.rateDownload,
-				percentDone: torrent.percentDone
+		newTorrent = { kind: "Torrent", container: this };
+		for( prop in torrent ) {
+			if( prop == "name" ) {
+				newTorrent[ "torrentName" ] = torrent[ prop ];
+			}else if( prop == "id" ) {
+				newTorrent[ "torrentId" ] = torrent[ prop ];
+			}
+			else {
+				newTorrent[ prop ] = torrent[ prop ];
+			}
+		}
 
-		});
+		this.createComponent(newTorrent);
+	},
+
+	tap: function( sender, event ) {
+		if( sender.kind == "Torrent") {
+			selected = sender.hasClass( "selected" );
+			if( event.metaKey || event.ctrlKey ) {
+				if( selected ) {
+					sender.deselect( );
+				} else {
+					sender.select( );
+				}
+				
+			} else {
+				this.deselectAll( );
+				if( !selected ) {
+					sender.select( );
+				}
+			}
+		}
+	},
+
+	deselectAll: function( ) {
+		this.waterfall( "onDeselect" );
+	},
+
+	selectAll: function( ) {
+		this.waterfall( "onSelect" );	
 	}
+
 });

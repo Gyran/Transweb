@@ -3,10 +3,6 @@ enyo.kind({
 	kind: enyo.Button,
 	content: "Add torrent",
 
-	handlers: {
-		onShowPref: "pref"
-	},
-
 	tap: function(inSender, inEvent){
 		this.bubble("onShowPref", "AddTorrentPref");
 	},

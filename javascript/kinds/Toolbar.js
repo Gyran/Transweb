@@ -4,7 +4,8 @@ enyo.kind({
 	tag: "div",
 
 	components: [
-		{ kind: "AddTorrentToolbarButton" }
+		{ kind: "AddTorrentToolbarButton" },
+		{ kind: "StartTorrentToolbarButton" }
 		
 	]
 })

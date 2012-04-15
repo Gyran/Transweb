@@ -1,6 +1,3 @@
-enyo.torrentColumns = [ { name: "Id" }, { name: "Name" }, { name: "Done" } ,{ name: "Ratio" }, { name: "Date Added" }, { name: "Upload rate" }, 
-						{ name: "Download rate"} ];
-
 enyo.kind({
 	name: "TorrentTableHead",
 	kind: enyo.Control,
@@ -11,7 +8,7 @@ enyo.kind({
 	},
 
 	generateComponents: function(){
-		enyo.forEach(enyo.torrentColumns, this.addThComponent, this);
+		enyo.forEach(enyo.application.torrentColumns, this.addThComponent, this);
 	},
 
 	addThComponent: function(component){
