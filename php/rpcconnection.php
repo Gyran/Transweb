@@ -1,7 +1,7 @@
 <?php
 
 require_once( dirname( __FILE__ ) . '/../config/config.php' );
-require_once( dirname( __FILE__ ) . '/classes/JSONTransmissionRPC.class.php' );
+require_once( dirname( __FILE__ ) . '/../PHP-Transmission-Class/class/TransmissionRPC.class.php' );
 
 $defaultTorrentFields = array( "addedDate", "name", "status", "doneDate", "haveValid", "totalSize", "uploadRatio",
 								"rateDownload", "rateUpload", "percentDone", "files", "fileStats", "totalSize", "eta",
@@ -12,8 +12,6 @@ try {
 } catch ( Exception $e ) {
 	die( json_encode( false ) );
 }
-
-//echo '<script type="text/javascript">console.log(';
 
 switch( $_POST["method"] ) {
 	case 'getAll':
@@ -41,7 +39,6 @@ switch( $_POST["method"] ) {
 		# code...
 		break;
 }
-//echo ');</script>';
 
 
 ?>
