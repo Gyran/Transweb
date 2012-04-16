@@ -5,7 +5,8 @@ enyo.kind({
 
 	components: [
 		{ kind: "AddTorrentToolbarButton" },
-		{ kind: "StartTorrentToolbarButton" }
+		{ kind: "StartTorrentToolbarButton" },
+		{ kind: "StopTorrentToolbarButton" }
 		
 	]
 })

@@ -46,6 +46,10 @@ enyo.kind({
 			}
 		}
 
+		if( enyo.application.selectedTorrents.indexOf(newTorrent.hashString) !== -1 ) {
+			newTorrent.classes = "selected";
+		}
+
 		this.createComponent(newTorrent);
 	},
 

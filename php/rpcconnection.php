@@ -30,6 +30,9 @@ switch( $_POST["method"] ) {
 	case 'startTorrents':
 		echo json_encode( $rpc->start( $_POST["torrents"] ) );
 		break;
+	case 'stopTorrents':
+		echo json_encode( $rpc->stop( $_POST["torrents"] ) );
+		break;
 	default:
 		echo '<pre>';
 		print_r($_GET);

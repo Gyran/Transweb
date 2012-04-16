@@ -28,6 +28,10 @@ enyo.kind({
 		//this.updateTimer = setInterval(enyo.bind(this, "waterfall", "onUpdate"), 2000);
 	},
 
+	forceUpdate: function( ) {
+		this.waterfall( "onUpdate" );
+	},
+
 	update: function(){
 
 	},
@@ -44,7 +48,8 @@ enyo.kind({
 		onShowPref: "showPref",
 		onUpdate: "update",
 		onStartLoading: "startLoading",
-		onStopLoading: "stopLoading"
+		onStopLoading: "stopLoading",
+		onForceUpdate: "forceUpdate"
 	},
 
 	keydown: function( sender, event ) {
