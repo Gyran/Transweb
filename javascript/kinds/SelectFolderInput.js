@@ -12,8 +12,13 @@ enyo.kind({
 		{ name: "browser", tag: "ul", content: "loading", showing: false }
 	],
 
+	create: function( ) {
+		this.inherited( arguments );
+		this.setValue( this.value );
+	},
+
 	getValue: function( ) {
-		return this.value;
+		return this.$.path.getValue( );
 	},
 
 	setValue: function( value ) {
