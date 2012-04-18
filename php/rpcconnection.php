@@ -1,7 +1,7 @@
 <?php
 
 require_once( dirname( __FILE__ ) . '/../config/config.php' );
-require_once( dirname( __FILE__ ) . '/../PHP-Transmission-Class/class/TransmissionRPC.class.php' );
+require_once( dirname( __FILE__ ) . '/classes/TransmissionRPC.class.php' );
 
 $defaultTorrentFields = array( "addedDate", "name", "status", "doneDate", "haveValid", "totalSize", "uploadRatio",
 								"rateDownload", "rateUpload", "percentDone", "fileStats", "totalSize", "eta",
