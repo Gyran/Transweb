@@ -11,13 +11,22 @@ enyo.kind({
 		{ name: "smallLoading", kind: "SmallLoading", showing: false },
 		{ name: "toolbar", kind: "Toolbar" },
 		{ name: "torrentsList", kind: "TorrentTable" },
-		{ name: "preferenceHolder", kind: "PreferenceHolder", showing: false }
-
+		{ name: "preferenceHolder", kind: "PreferenceHolder", showing: false },
+		{ name: "detailsHolder", kind: "DetailsHolder" }
 		//{ kind: enyo.Signals, onkeydown: "keydown", onkeyup: "keyup" }
 
-		//{ name: "inspector", kind: "Inspector" }
+		
 
 	],
+
+
+    handlers: {
+        onUpdate: "update",
+        onStartLoading: "startLoading",
+        onStopLoading: "stopLoading",
+        onForceUpdate: "forceUpdate",
+        onAnnounceEvent: "announceEvent"
+    },
 
 	updateTimer: null,
 
@@ -33,7 +42,7 @@ enyo.kind({
 	},
 
 	update: function(){
-
+        
 	},
 
 	initPlugins: function(){
@@ -44,30 +53,8 @@ enyo.kind({
 
 	},
 
-	handlers: {
-		onShowPref: "showPref",
-		onUpdate: "update",
-		onStartLoading: "startLoading",
-		onStopLoading: "stopLoading",
-		onForceUpdate: "forceUpdate"
-	},
-
-	keydown: function( sender, event ) {
-		console.log(sender, event);
-	},
-	keyup: function( sender, event ) {
-		console.log(event);
-	},
-
-	showPref: function(sender, prefKind){
-		this.$.preferenceHolder.destroyClientControls();
-		this.createComponent({
-			kind: prefKind,
-			container: this.$.preferenceHolder,
-			classes: "TranswebApp"
-		});
-		this.$.preferenceHolder.render();
-		this.$.preferenceHolder.show();
+	announceEvent: function( sender, obj ) {
+		this.waterfall( obj.event, obj.arguments );
 	},
 
 	startLoading: function( sender ) {

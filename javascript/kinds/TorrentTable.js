@@ -8,7 +8,9 @@ enyo.kind({
 	],
 
 	handlers: {
-		onUpdate: "update"
+		onUpdate: "update",
+		onDeselectAll: "deselectAll",
+		onSelectAll: "selectAll"
 	},
 
 	update: function(){
@@ -17,7 +19,7 @@ enyo.kind({
 
 	create: function () {
 		this.inherited(arguments);
-		this.listTorrents();
+		this.update();
 	},
 
 	listTorrents: function(){
@@ -54,22 +56,7 @@ enyo.kind({
 	},
 
 	tap: function( sender, event ) {
-		if( sender.kind == "Torrent") {
-			selected = sender.hasClass( "selected" );
-			if( event.metaKey || event.ctrlKey ) {
-				if( selected ) {
-					sender.deselect( );
-				} else {
-					sender.select( );
-				}
-				
-			} else {
-				this.deselectAll( );
-				if( !selected ) {
-					sender.select( );
-				}
-			}
-		}
+
 	},
 
 	deselectAll: function( ) {

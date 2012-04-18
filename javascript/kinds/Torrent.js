@@ -27,66 +27,13 @@ enyo.kind({
 	deselect: function( sender ) {
 		this.removeClass( "selected" );
 		enyo.application.deselectTorrent( this.hashString );
+		this.bubble( "onAnnounceEvent", { event: "onUpdateTorrentDetails", arguments: [ ] } );
 	},
 
 	select: function( sender ) {
 		this.addClass( "selected" );
 		enyo.application.selectTorrent( this.hashString );
-	},
-
-	statics: {
-		// Constants
-		TR_STATUS_STOPPED         : 0,
-		TR_STATUS_CHECK_WAIT      : 1,
-		TR_STATUS_CHECK           : 2,
-		TR_STATUS_DOWNLOAD_WAIT   : 3,
-		TR_STATUS_DOWNLOAD        : 4,
-		TR_STATUS_SEED_WAIT       : 5,
-		TR_STATUS_SEED            : 6,
-		
-		_RatioUseGlobal        : 0,
-		_RatioUseLocal         : 1,
-		_RatioUnlimited        : 2,
-
-		_ErrNone               : 0,
-		_ErrTrackerWarning     : 1,
-		_ErrTrackerError       : 2,
-		_ErrLocalError         : 3,
-
-		_TrackerInactive       : 0,
-		_TrackerWaiting        : 1,
-		_TrackerQueued         : 2,
-		_TrackerActive         : 3,
-
-		getStatusString: function( status ) {
-			switch( status ) {
-				case Torrent.TR_STATUS_STOPPED:
-					return "Stopped";
-					break;
-				case Torrent.TR_STATUS_CHECK_WAIT:
-					return "Waiting to verify local files";
-					break;
-				case Torrent.TR_STATUS_CHECK:
-					return "Verifying local files";
-					break;
-				case Torrent.TR_STATUS_DOWNLOAD_WAIT:
-					return "Queued for download";
-					break;
-				case Torrent.TR_STATUS_DOWNLOAD:
-					return "Downloading";
-					break;
-				case Torrent.TR_STATUS_SEED_WAIT:
-					return "Queued for seeding";
-					break;
-				case Torrent.TR_STATUS_SEED:
-					return "Seeding";
-					break;
-				default:
-					return "Unknown status";
-					break;
-			}
-		}
-
+		this.bubble( "onAnnounceEvent", { event: "onUpdateTorrentDetails", arguments: [ ] } );
 	},
 
 	published: {
@@ -173,9 +120,24 @@ enyo.kind({
 		this.totalSizeChanged( );
 		this.etaChanged( );
 		this.downloadedEverChanged( );
-		this.addClass("asfasf");
 	},
 
+	tap: function( sender, event ) {
+		selected = this.hasClass( "selected" );
+		if( event.metaKey || event.ctrlKey ) {
+			if( selected ) {
+				this.deselect( );
+			} else {
+				this.select( );
+			}
+		} else {
+			this.bubble( "onAnnounceEvent", { event: "onDeselectAll", arguments: [] } );
+			if( !selected ) {
+				this.select( );
+			}
+		}
+	},
+ 
 	torrentNameChanged: function(){
 		this.$.torrentName.setContent( this.torrentName );
 	},
@@ -201,7 +163,7 @@ enyo.kind({
 	},
 
 	statusChanged: function(){
-		this.$.status.setContent( Torrent.getStatusString( this.status ) );
+		this.$.status.setContent( enyo.application.getStatusString( this.status ) );
 	},
 
 	rateUploadChanged: function(){

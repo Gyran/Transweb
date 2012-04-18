@@ -4,7 +4,8 @@ enyo.kind({
 	content: "Add torrent",
 
 	tap: function(inSender, inEvent){
-		this.bubble("onShowPref", "AddTorrentPref");
+		this.bubble( "onAnnounceEvent", { event: "onShowPref", arguments: [ "AddTorrentPref" ] } );
+		//this.bubble("onShowPref", "AddTorrentPref");
 	},
 
 	pref: function(){

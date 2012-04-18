@@ -17,7 +17,27 @@ enyo.application = {
 						{ name: "Download rate", field: "rateDownload" },
 						{ name: "ETA", field: "eta" }
 					],
+	TR_STATUS_STOPPED         : 0,
+	TR_STATUS_CHECK_WAIT      : 1,
+	TR_STATUS_CHECK           : 2,
+	TR_STATUS_DOWNLOAD_WAIT   : 3,
+	TR_STATUS_DOWNLOAD        : 4,
+	TR_STATUS_SEED_WAIT       : 5,
+	TR_STATUS_SEED            : 6,
 
+	_RatioUseGlobal        : 0,
+	_RatioUseLocal         : 1,
+	_RatioUnlimited        : 2,
+
+	_ErrNone               : 0,
+	_ErrTrackerWarning     : 1,
+	_ErrTrackerError       : 2,
+	_ErrLocalError         : 3,
+
+	_TrackerInactive       : 0,
+	_TrackerWaiting        : 1,
+	_TrackerQueued         : 2,
+	_TrackerActive         : 3,
 
 
 
@@ -60,6 +80,35 @@ enyo.application = {
 		}
 
 		return ret;
+	},
+
+	getStatusString: function( status ) {
+		switch( status ) {
+			case this.TR_STATUS_STOPPED:
+				return "Stopped";
+				break;
+			case this.TR_STATUS_CHECK_WAIT:
+				return "Waiting to verify local files";
+				break;
+			case this.TR_STATUS_CHECK:
+				return "Verifying local files";
+				break;
+			case this.TR_STATUS_DOWNLOAD_WAIT:
+				return "Queued for download";
+				break;
+			case this.TR_STATUS_DOWNLOAD:
+				return "Downloading";
+				break;
+			case this.TR_STATUS_SEED_WAIT:
+				return "Queued for seeding";
+				break;
+			case this.TR_STATUS_SEED:
+				return "Seeding";
+				break;
+			default:
+				return "Unknown status";
+				break;
+		}
 	},
 
 	/* ****** */

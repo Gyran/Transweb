@@ -4,8 +4,12 @@ require_once( dirname( __FILE__ ) . '/../config/config.php' );
 require_once( dirname( __FILE__ ) . '/../PHP-Transmission-Class/class/TransmissionRPC.class.php' );
 
 $defaultTorrentFields = array( "addedDate", "name", "status", "doneDate", "haveValid", "totalSize", "uploadRatio",
+								"rateDownload", "rateUpload", "percentDone", "fileStats", "totalSize", "eta",
+								"downloadedEver", "leftUntilDone", "status", "hashString" );
+
+$torrentDetailsFields = array( "addedDate", "name", "status", "doneDate", "haveValid", "totalSize", "uploadRatio",
 								"rateDownload", "rateUpload", "percentDone", "files", "fileStats", "totalSize", "eta",
-								"downloadedEver", "leftUntilDone", "status", "id", "hashString" );
+								"downloadedEver", "leftUntilDone", "status", "id", "hashString", "downloadDir" );
 
 try {
 	$rpc = new TransmissionRPC( TRANSMISSION_RPC_URL, TRANSMISSION_RPC_USERNAME, TRANSMISSION_RPC_PASSWORD );
@@ -30,6 +34,9 @@ switch( $_POST["method"] ) {
 		break;
 	case 'stopTorrents':
 		echo json_encode( $rpc->stop( $_POST["torrents"] ) );
+		break;
+	case 'getTorrentDetails':
+		echo json_encode( $rpc->get( $_POST["torrent"], $torrentDetailsFields ) );	
 		break;
 	default:
 		echo '<pre>';

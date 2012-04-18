@@ -11,6 +11,8 @@ enyo.depends(
 	"StartTorrentToolbarButton.js",
 	"StopTorrentToolbarButton.js",
 	"Toolbar.js",
+	"TorrentDetails.js",
+	"DetailsHolder.js",
 	"PreferenceHolder.js",
 	"App.js"
 );
