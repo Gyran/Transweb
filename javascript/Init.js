@@ -32,8 +32,6 @@ enyo.application = {
 	_TrackerQueued         : 2,
 	_TrackerActive         : 3,
 
-
-
 	/* help functions */
 	getSpeedUnit: function( bytes ) {
 		if( bytes == 0 ) {
@@ -76,6 +74,18 @@ enyo.application = {
 	},
 
 	/* ****** */
+
+	getTorrents: function( ) {
+		return this.torrents;
+	},
+
+	destoryTorrents: function( ) {
+		this.torrents = [ ];
+	},
+
+	addTorrent: function( torrent ) {
+		this.torrents.push( torrent );
+	},
 
 	selectTorrent: function( hash ) {
 		enyo.application.selectedTorrents.push( hash );
@@ -122,7 +132,7 @@ enyo.application = {
 		}
 		return false;
 	},
-	torrentFilterFunction: this.filterAll
+	torrentFilterFunction: null
 	/* /Filter functions */
 
 }

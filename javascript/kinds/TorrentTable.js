@@ -20,8 +20,8 @@ enyo.kind({
 	},
 
 	create: function () {
-		this.inherited(arguments);
-		this.update();
+		this.inherited( arguments );
+		this.update( );
 	},
 
 	listTorrents: function(){
@@ -29,10 +29,10 @@ enyo.kind({
 		new enyo.Ajax( { url: "php/rpcconnection.php", method: "post" } ).response( this, "listTorrentsResponse" ).go( { method: "getAll" } );
 	},
 
-	listTorrentsResponse: function(inSender, inResponse) {
-		enyo.application.torrents = inResponse.arguments.torrents;
+	listTorrentsResponse: function(sender, response) {
+		enyo.application.destoryTorrents( );
 		this.destroyClientControls();
-		enyo.forEach(enyo.application.torrents, this.addTorrentToList, this);
+		enyo.forEach( response.arguments.torrents, this.addTorrentToList, this );
 		this.render();
 		this.bubble( "onStopLoading" );
 	},
@@ -40,6 +40,7 @@ enyo.kind({
 	addTorrentToList: function(torrent){
 		t = new Torrent( );
 		t.fill(torrent);
+		enyo.application.addTorrent( t );
 		if( enyo.application.torrentFilterFunction( t ) ){
 			newTorrent = { kind: "TorrentRow", container: this, torrent: t };
 

@@ -29,11 +29,19 @@ body, ul, li, p, tr, td, th {
 
 .rightColumn {
 	float: left;
+	width: 1050px;
 }
 
 /**** Toolbar ****/
 .toolbar {
 	border: 1px solid #000;
+}
+
+/**** SmallLoading ****/
+.smallLoading {
+	position: fixed;
+	right: 0;
+	top: 0;
 }
 
 /**** TorrentTableHolder ****/
@@ -60,6 +68,7 @@ body, ul, li, p, tr, td, th {
 
 .torrentTable td, .torrentTable th {
 	padding: 3px 5px;
+	white-space: nowrap;
 }
 
 /**** DetailsHolder ****/

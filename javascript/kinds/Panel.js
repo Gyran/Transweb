@@ -3,7 +3,7 @@ enyo.kind({
 	tag: "div",
 
 	components: [
-		{ name: "statesSorter", kind: "StatesSorter" },
-		{ name: "categoriesSorter", kind: "CategoriesSorter" }
+		{ name: "statesFilter", kind: "StatesFilter" },
+		{ name: "foldersFilter", kind: "FoldersFilter" }
 	]
 });

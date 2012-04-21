@@ -13,7 +13,7 @@ enyo.kind({
 		},
 		{ tag: "div", classes: "rightColumn",
 			components: [
-				{ name: "smallLoading", kind: "SmallLoading", showing: false },
+				{ name: "smallLoading", kind: "SmallLoading", classes: "smallLoading",showing: false },
 				{ name: "toolbar", kind: "Toolbar" },
 				{ name: "torrentTable", kind: "TorrentTableHolder" },
 				{ name: "preferenceHolder", kind: "PreferenceHolder", showing: false },
@@ -40,7 +40,7 @@ enyo.kind({
 		this.inherited(arguments);
 		this.initPlugins();
 		t = this;
-		//this.updateTimer = setInterval(enyo.bind(this, "waterfall", "onUpdate"), 2000);
+		this.updateTimer = setInterval(enyo.bind(this, "waterfall", "onUpdate"), 5000);
 	},
 
 	forceUpdate: function( ) {

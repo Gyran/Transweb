@@ -15,9 +15,9 @@ enyo.depends(
 	"TorrentDetails.js",
 	"DetailsHolder.js",
 	"PreferenceHolder.js",
-	"State.js",
-	"StatesSorter.js",
-	"CategoriesSorter.js",
+	"StateFilter.js",
+	"StatesFilter.js",
+	"FoldersFilter.js",
 	"Panel.js",
 	"App.js"
 );
