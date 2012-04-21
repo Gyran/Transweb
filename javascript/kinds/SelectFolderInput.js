@@ -32,16 +32,18 @@ enyo.kind({
 			this.$.browser.hide();
 		} else {
 			this.$.browser.show();
+			this.bubble( "onStartLoading" );
 			new enyo.Ajax({url: "php/getDirs.php" }).response(this, "doBrowse").go({path: this.$.path.getValue() });
 		}
 	},
 
 	doBrowse: function ( sender, response ) {
+		this.bubble( "onStopLoading" );
+		this.$.browser.destroyClientControls();
 		if( !response ) {
 			this.$.browser.setContent("Something went wrong");
 			return;
 		}
-		this.$.browser.destroyClientControls();
 		enyo.forEach(response, this.addFolder, this);
 		this.$.browser.render();
 	},
@@ -63,14 +65,15 @@ enyo.kind({
 				return;
 				break;
 			case "..":
-				path = this.getValue().replace( /([^\/]+?)\/[^\/]+?$/ , "$1" );
+				path = path.replace( /([^\/]+?)\/[^\/]+?$/ , "$1" );
 				break;
 			default:
-				path = this.getValue() + "/" + sender.content;
+				path = path + "/" + sender.getContent( );
 				break;
 		}
 
 		this.setValue( path );
+		this.bubble( "onStartLoading" );
 		new enyo.Ajax({url: "php/getDirs.php" }).response(this, "doBrowse").go({path: this.getValue() });
 	}
 });
