@@ -17,13 +17,6 @@ enyo.application = {
 						{ name: "Download rate", field: "rateDownload" },
 						{ name: "ETA", field: "eta" }
 					],
-	TR_STATUS_STOPPED         : 0,
-	TR_STATUS_CHECK_WAIT      : 1,
-	TR_STATUS_CHECK           : 2,
-	TR_STATUS_DOWNLOAD_WAIT   : 3,
-	TR_STATUS_DOWNLOAD        : 4,
-	TR_STATUS_SEED_WAIT       : 5,
-	TR_STATUS_SEED            : 6,
 
 	_RatioUseGlobal        : 0,
 	_RatioUseLocal         : 1,
@@ -82,35 +75,6 @@ enyo.application = {
 		return ret;
 	},
 
-	getStatusString: function( status ) {
-		switch( status ) {
-			case this.TR_STATUS_STOPPED:
-				return "Stopped";
-				break;
-			case this.TR_STATUS_CHECK_WAIT:
-				return "Waiting to verify local files";
-				break;
-			case this.TR_STATUS_CHECK:
-				return "Verifying local files";
-				break;
-			case this.TR_STATUS_DOWNLOAD_WAIT:
-				return "Queued for download";
-				break;
-			case this.TR_STATUS_DOWNLOAD:
-				return "Downloading";
-				break;
-			case this.TR_STATUS_SEED_WAIT:
-				return "Queued for seeding";
-				break;
-			case this.TR_STATUS_SEED:
-				return "Seeding";
-				break;
-			default:
-				return "Unknown status";
-				break;
-		}
-	},
-
 	/* ****** */
 
 	selectTorrent: function( hash ) {
@@ -122,9 +86,49 @@ enyo.application = {
 		if( index !== -1 ) {
 			enyo.application.selectedTorrents.splice( index, 1 );
 		}
-	}
+	},
+
+	/* Filter functions */
+	filterAll: function( torrent ) {
+		return true;
+	},
+	filterStopped: function( torrent ) {
+		if( torrent.isStopped( ) ) {
+			return true;
+		}
+		return false;
+	},
+	filterDownloading: function( torrent ) {
+		if( torrent.isDownloading( ) ) {
+				return true;
+		}
+		return false;
+	},
+	filterCompleted: function( torrent ) {
+		if( torrent.isDone( ) ) {
+				return true;
+		}
+		return false;
+	},
+	filterActive: function( torrent ) {
+		if( torrent.isActive( ) ) {
+				return true;
+		}
+		return false;
+	},
+	filterInactive: function( torrent ) {
+		if( torrent.isInactive( ) ) {
+				return true;
+		}
+		return false;
+	},
+	torrentFilterFunction: this.filterAll
+	/* /Filter functions */
 
 }
+/* default stuff */
+enyo.application.torrentFilterFunction = enyo.application.filterAll;
+/*****/
 
 enyo.kind({
 	name: "Init",

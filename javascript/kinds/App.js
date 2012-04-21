@@ -3,16 +3,24 @@ enyo.kind({
 	kind: enyo.Control,
 	tag: "div",
 
-	classes: "app",
+	classes: "app floatcontainer",
 
 	components: [
-		{ name: "smallLoading", kind: "SmallLoading", showing: false },
-		{ name: "toolbar", kind: "Toolbar" },
-		{ name: "torrentTable", kind: "TorrentTableHolder" },
-		{ name: "preferenceHolder", kind: "PreferenceHolder", showing: false },
-		{ name: "detailsHolder", kind: "DetailsHolder" }
+		{ tag: "div", classes: "leftColumn",
+			components: [
+				{ name: "panel", kind: "Panel" }
+			] 
+		},
+		{ tag: "div", classes: "rightColumn",
+			components: [
+				{ name: "smallLoading", kind: "SmallLoading", showing: false },
+				{ name: "toolbar", kind: "Toolbar" },
+				{ name: "torrentTable", kind: "TorrentTableHolder" },
+				{ name: "preferenceHolder", kind: "PreferenceHolder", showing: false },
+				{ name: "detailsHolder", kind: "DetailsHolder" }
+			]
 		//{ kind: enyo.Signals, onkeydown: "keydown", onkeyup: "keyup" }
-
+		}
 		
 
 	],

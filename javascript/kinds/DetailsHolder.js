@@ -1,4 +1,3 @@
-console.log(enyo);
 enyo.kind({
 	name: "DetailsHolder",
 	kind: enyo.Control,

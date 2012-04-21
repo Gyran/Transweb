@@ -1,9 +1,35 @@
-body {
+body, ul, li, p, tr, td, th {
 	margin: 0;
 	padding: 0;
 }
 
+/*** csscreator hack ***/
+.floatcontainer:after{
+    content: "."; 
+    display: block; 
+    height: 0; 
+    font-size:0;	
+    clear: both; 
+    visibility:hidden;
+    }
+	
+   .floatcontainer{display: inline-block;} 
 
+    /* Hides from IE Mac */
+    * html .floatcontainer {height: 1%;}
+       .floatcontainer{display:block;}
+    /* End Hack */ 
+/****************/
+
+/**** Columns ****/
+.leftColumn {
+	width: 200px;
+	float: left;
+}
+
+.rightColumn {
+	float: left;
+}
 
 /**** Toolbar ****/
 .toolbar {
@@ -17,10 +43,23 @@ body {
 	overflow: auto;
 }
 
+/**** TorrentTable ****/
+.torrentTable {
+	border-collapse: collapse;
+}
+
 /**** Torrent ****/
 .torrent {
 	width: 100px;
 	overflow: hidden;
+}
+
+.selected {
+	background-color: #79a5ff;
+}
+
+.torrentTable td, .torrentTable th {
+	padding: 3px 5px;
 }
 
 /**** DetailsHolder ****/
@@ -33,32 +72,35 @@ body {
 	border: 1px solid #000;
 	background-color: #CCC;
 	position: absolute;
-	height: 200px;
 	width: 400px;
 	left: 50%;
 	margin-left: -200px;
 	top: 100px;
+	padding: 10px;
 }
 
 .addTorrentPref input[type="text"] {
 	width: 70%;
-	margin-left: 10px;
 }
 
 /**** SelectFolderInput ****/
 .browser {
 	position: absolute;
-	top: 25px;
-	left: 10px;
-	height: 200px;
+/*	top: 25px;
+	left: 10px;*/
 	width: 300px;
+	height: 200px;
 	background-color: #CCC;
 	border: 1px solid #000;
 	overflow: auto;
-	margin: 0;
-	padding: 0;
 }
 
 .browser li {
-	margin-left: 5px;
+	padding-left: 5px;
+	cursor: pointer
+	overflow: auto;
+}
+
+.browser li:hover {
+	background-color: #AAA;
 }

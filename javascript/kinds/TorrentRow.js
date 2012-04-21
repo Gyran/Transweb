@@ -1,7 +1,7 @@
 enyo.application.language.noRatio = "None";
 
 enyo.kind({
-	name: "Torrent",
+	name: "TorrentRow",
 	kind: enyo.Control,
 	tag: "tr",
 
@@ -28,87 +28,19 @@ enyo.kind({
 
 	deselect: function( sender ) {
 		this.removeClass( "selected" );
-		enyo.application.deselectTorrent( this.hashString );
+		enyo.application.deselectTorrent( this.torrent.hashString );
 		this.bubble( "onAnnounceEvent", { event: "onUpdateTorrentDetails", arguments: [ ] } );
 	},
 
 	select: function( sender ) {
 		this.addClass( "selected" );
-		enyo.application.selectTorrent( this.hashString );
+		enyo.application.selectTorrent( this.torrent.hashString );
 		this.bubble( "onAnnounceEvent", { event: "onUpdateTorrentDetails", arguments: [ ] } );
 	},
 
 	published: {
-		addedDate: 0,
-		bandwidthPriority: 0,
-		comment: 0,
-		corruptEver: 0,
-		creator: "",
-		dateCreated: 0,
-		desiredAvailable: 0,
-		doneDate: 0,
-		downloadDir: "",
-		downloadedEver: 0,
-		downloadLimit: 0,
-		downloadLimited: null,
-		error: 0,
-		errorString: "",
-		eta: "",
-		files: [],
-		fileStats: [],
-		hashString: "",
-		haveUnchecked: 0,
-		haveValid: 0,
-		honorsSessionLimits: null,
-		torrentId: -1,
-		isFinished: null,
-		isPrivate: null,
-		isStalled: null,
-		leftUntilDone: 0,
-		magnetLink: 0,
-		manualAnnounceTime: 0,
-		maxConnectedPeers: 0,
-		metadataPercentComplete: 0.0,
-		torrentName: "",
-		peerLimit: 0,
-		peers: [],
-		peersConnected: 0,
-		peersFrom: null,
-		peersGettingFromUs: 0,
-		peersSendingToUs: 0,
-		percentDone: 0.0,
-		pieces: "",
-		piecesCount: 0,
-		piecesSize: 0,
-		priorities: [],
-		queuePosition: 0,
-		rateDownload: 0,
-		rateUpload: 0,
-		recheckProgress: 0.0,
-		secondsDownloading: 0,
-		secondsSeeding: 0,
-		seedIdleLimit: 0,
-		seedIdleMode: 0,
-		seedRatioLimit: 0.0,
-		seedRatioMode: 0,
-		sizeWhenDone: 0,
-		startDate: 0,
-		status: 0,
-		trackers: [],
-		trackerStats: [],
-		totalSize: 0,
-		torrentFile: "",
-		uploadedEver: 0,
-		uploadLimit: 0,
-		uploadLimited: null,
-		uploadRatio: 0.0,
-		wanted: [],
-		webseeds: [],
-		webseedsSendingToUs: 0
+		torrent: null
 	},
-
-	isStopped: function() { return this.status === Torrent.TR_STATUS_STOPPED },
-	isDone: function() { return this.leftUntilDone < 1 },
 
 	create: function(){
 		this.inherited( arguments );
@@ -141,7 +73,7 @@ enyo.kind({
 	},
  
 	torrentNameChanged: function(){
-		this.$.torrentName.setContent( this.torrentName );
+		this.$.torrentName.setContent( this.torrent.name );
 	},
 
 	uploadRatioChanged: function(){
@@ -153,49 +85,49 @@ enyo.kind({
 				this.$.uploadRatio.setContent( "inf" );
 				break;
 			default:
-				this.$.uploadRatio.setContent( this.uploadRatio.toFixed( 2 ) );
+				this.$.uploadRatio.setContent( this.torrent.uploadRatio.toFixed( 2 ) );
 				break;
 
 		}
 	},
 
 	addedDateChanged: function(){
-		date = new Date( this.addedDate * 1000 );
+		date = new Date( this.torrent.addedDate * 1000 );
 		this.$.addedDate.setContent( getDate( date ) );
 	},
 
 	statusChanged: function(){
-		this.$.status.setContent( enyo.application.getStatusString( this.status ) );
+		this.$.status.setContent( this.torrent.getStatusString( ) );
 	},
 
 	rateUploadChanged: function(){
-		this.$.rateUpload.setContent( enyo.application.getSpeedUnit( this.rateUpload ) );
+		this.$.rateUpload.setContent( enyo.application.getSpeedUnit( this.torrent.rateUpload ) );
 	},
 
 	rateDownloadChanged: function(){
-		this.$.rateDownload.setContent(enyo.application.getSpeedUnit(this.rateDownload));
+		this.$.rateDownload.setContent(enyo.application.getSpeedUnit(this.torrent.rateDownload));
 	},
 
 	percentDoneChanged: function(){
-		this.$.percentDone.setContent( ( this.percentDone * 100 ).toFixed( 0 ) + "%" );
+		this.$.percentDone.setContent( ( this.torrent.percentDone * 100 ).toFixed( 0 ) + "%" );
 	},
 
 	totalSizeChanged: function(){
-		this.$.totalSize.setContent( enyo.application.getSizeUnit( this.totalSize ) );
+		this.$.totalSize.setContent( enyo.application.getSizeUnit( this.torrent.totalSize ) );
 	},
 
 	etaChanged: function() {
-		if( !this.isStopped( ) && !this.isDone( ) ) {
+		if( !this.torrent.isStopped( ) && !this.torrent.isDone( ) ) {
 			if( this.eta < 0 ) {
 				this.$.eta.setContent( "Unknown" );
 			} else {
-				this.$.eta.setContent( enyo.application.getTimeFromSec( this.eta ) );
+				this.$.eta.setContent( enyo.application.getTimeFromSec( this.torrent.eta ) );
 			}
 		}
 	},
 
 	downloadedEverChanged: function() {
-		this.$.downloadedEver.setContent( enyo.application.getSizeUnit( this.downloadedEver ) );
+		this.$.downloadedEver.setContent( enyo.application.getSizeUnit( this.torrent.downloadedEver ) );
 	}
 
 

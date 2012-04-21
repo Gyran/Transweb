@@ -38,23 +38,17 @@ enyo.kind({
 	},
 
 	addTorrentToList: function(torrent){
-		newTorrent = { kind: "Torrent", container: this };
-		for( prop in torrent ) {
-			if( prop == "name" ) {
-				newTorrent[ "torrentName" ] = torrent[ prop ];
-			}else if( prop == "id" ) {
-				newTorrent[ "torrentId" ] = torrent[ prop ];
-			}
-			else {
-				newTorrent[ prop ] = torrent[ prop ];
-			}
-		}
+		t = new Torrent( );
+		t.fill(torrent);
+		if( enyo.application.torrentFilterFunction( t ) ){
+			newTorrent = { kind: "TorrentRow", container: this, torrent: t };
 
-		if( enyo.application.selectedTorrents.indexOf(newTorrent.hashString) !== -1 ) {
-			newTorrent.classes = "selected";
-		}
+			if( enyo.application.selectedTorrents.indexOf(t.hashString) !== -1 ) {
+				newTorrent.classes = "selected";
+			}
 
-		this.createComponent(newTorrent);
+			this.createComponent(newTorrent);
+		}
 	},
 
 	tap: function( sender, event ) {
