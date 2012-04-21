@@ -7,9 +7,10 @@ enyo.kind({
 	},
 
 	components: [
-		{ name: "path", kind: enyo.Input },
+		{ name: "path", kind: enyo.Input, type: "text" },
 		{ name: "browse", kind: enyo.Button, content: "...", ontap: "browseTap" },
-		{ name: "browser", tag: "ul", content: "loading", showing: false }
+		{ tag: "br" },
+		{ name: "browser", tag: "ul", content: "loading", showing: false, classes: "browser" }
 	],
 
 	create: function( ) {

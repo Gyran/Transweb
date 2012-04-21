@@ -3,14 +3,12 @@ enyo.kind({
 	kind: enyo.Control,
 	tag: "div",
 
-	published: {
-		plugins: []
-	},
+	classes: "app",
 
 	components: [
 		{ name: "smallLoading", kind: "SmallLoading", showing: false },
 		{ name: "toolbar", kind: "Toolbar" },
-		{ name: "torrentsList", kind: "TorrentTable" },
+		{ name: "torrentTable", kind: "TorrentTableHolder" },
 		{ name: "preferenceHolder", kind: "PreferenceHolder", showing: false },
 		{ name: "detailsHolder", kind: "DetailsHolder" }
 		//{ kind: enyo.Signals, onkeydown: "keydown", onkeyup: "keyup" }

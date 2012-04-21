@@ -1,14 +1,19 @@
+console.log(enyo);
 enyo.kind({
 	name: "DetailsHolder",
 	kind: enyo.Control,
 	tag: "div",
 
-	content: "detailsholder",
+	classes: "detailsHolder",
 
     components: [
         /* Maybe add some tabs */
         { name: "holder", tag: "div" }
     ],
+
+    published: {
+    	torrent: null
+    },
 
 	handlers: {
 		onShowDetails: "showDetails",

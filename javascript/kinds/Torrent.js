@@ -5,6 +5,8 @@ enyo.kind({
 	kind: enyo.Control,
 	tag: "tr",
 
+	classes: "torrent",
+
 	components: [
 		{ name: "status", kind: "TorrentTableBodyCell" },
 		{ name: "torrentName", kind: "TorrentTableBodyCell" },

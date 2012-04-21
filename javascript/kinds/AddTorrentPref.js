@@ -3,10 +3,11 @@ enyo.kind({
 	kind: enyo.Control,
 	tag: "div",
 	content: "AddTorrentPref",
+	classes: "addTorrentPref",
 
 	components: [
 		{ name: "downloadPath", kind: "SelectFolderInput" },
-		{ name: "link", kind: enyo.Input, placeholder: "URL to torrent" },
+		{ name: "link", kind: enyo.Input, placeholder: "URL to torrent", type: "text" },
 		{ kind: enyo.Button, content: "Add torrent", ontap: "addTorrentTap" }
 	],
 

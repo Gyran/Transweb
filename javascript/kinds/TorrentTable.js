@@ -3,6 +3,8 @@ enyo.kind({
 	kind: enyo.Control,
 	tag: "table",
 
+	classes: "torrentTable",
+
 	components: [
 		{ kind: "TorrentTableHead" }
 	],

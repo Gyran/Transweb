@@ -1,0 +1,64 @@
+body {
+	margin: 0;
+	padding: 0;
+}
+
+
+
+/**** Toolbar ****/
+.toolbar {
+	border: 1px solid #000;
+}
+
+/**** TorrentTableHolder ****/
+.torrentTableHolder {
+	width 80%;
+	height: 300px;
+	overflow: auto;
+}
+
+/**** Torrent ****/
+.torrent {
+	width: 100px;
+	overflow: hidden;
+}
+
+/**** DetailsHolder ****/
+.detailsHolder {
+	border: 1px solid #0F0;
+}
+
+/**** AddTorrentPref ****/
+.addTorrentPref {
+	border: 1px solid #000;
+	background-color: #CCC;
+	position: absolute;
+	height: 200px;
+	width: 400px;
+	left: 50%;
+	margin-left: -200px;
+	top: 100px;
+}
+
+.addTorrentPref input[type="text"] {
+	width: 70%;
+	margin-left: 10px;
+}
+
+/**** SelectFolderInput ****/
+.browser {
+	position: absolute;
+	top: 25px;
+	left: 10px;
+	height: 200px;
+	width: 300px;
+	background-color: #CCC;
+	border: 1px solid #000;
+	overflow: auto;
+	margin: 0;
+	padding: 0;
+}
+
+.browser li {
+	margin-left: 5px;
+}
