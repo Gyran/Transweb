@@ -39,7 +39,7 @@ class FileBrowser {
 			$dirs = array( ".", ".." );
 		}
 
-		if( ($dh = opendir($path)) ) {
+		if( ($dh = @opendir($path)) ) {
 			while( $dir = readdir($dh) ) {
 				if( is_dir($path . $dir) ) {
 					if( !in_array($dir, $this->exclude) ) {
@@ -54,6 +54,8 @@ class FileBrowser {
 					}
 				}
 			}
+		} else {
+			throw new Exception("Could not open directory.", 1);
 		}
 
 		return $dirs;
