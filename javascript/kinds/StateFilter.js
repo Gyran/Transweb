@@ -10,12 +10,12 @@ enyo.kind({
 	i: 0,
 
 	handlers: {
-		onUpdate: "update"
+		onTorrentsUpdated: "torrentsUpdated"
 	},
 
 	create: function( ) {
 		this.inherited( arguments );
-		this.update( );
+		this.torrentsUpdated( );
 	},
 
 	stateNameChanged: function( ) {
@@ -27,7 +27,7 @@ enyo.kind({
 		this.bubble( "onForceUpdate" );
 	},
 
-	update: function( ) {
+	torrentsUpdated: function( ) {
 		var t = this;
 		t.i = 0;
 		enyo.forEach( enyo.application.getTorrents( ), 

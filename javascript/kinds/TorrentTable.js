@@ -10,37 +10,26 @@ enyo.kind({
 	],
 
 	handlers: {
-		onUpdate: "update",
+		onTorrentsUpdated: "torrentsUpdated",
 		onDeselectAll: "deselectAll",
 		onSelectAll: "selectAll"
 	},
 
-	update: function(){
+	torrentsUpdated: function(){
 		this.listTorrents();
 	},
 
 	create: function () {
 		this.inherited( arguments );
-		this.update( );
 	},
 
 	listTorrents: function(){
-		this.bubble( "onStartLoading" );
-		new enyo.Ajax( { url: "php/rpcconnection.php", method: "post" } ).response( this, "listTorrentsResponse" ).go( { method: "getAll" } );
-	},
-
-	listTorrentsResponse: function(sender, response) {
-		enyo.application.destoryTorrents( );
 		this.destroyClientControls();
-		enyo.forEach( response.arguments.torrents, this.addTorrentToList, this );
+		enyo.forEach( enyo.application.getTorrents( ), this.addTorrentToList, this );
 		this.render();
-		this.bubble( "onStopLoading" );
 	},
 
-	addTorrentToList: function(torrent){
-		t = new Torrent( );
-		t.fill(torrent);
-		enyo.application.addTorrent( t );
+	addTorrentToList: function ( t ) {
 		if( enyo.application.torrentFilterFunction( t ) ){
 			newTorrent = { kind: "TorrentRow", container: this, torrent: t };
 
