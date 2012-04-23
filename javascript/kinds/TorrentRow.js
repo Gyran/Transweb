@@ -29,7 +29,7 @@ enyo.kind({
 	deselect: function( sender ) {
 		this.removeClass( "selected" );
 		enyo.application.deselectTorrent( this.torrent.hashString );
-		this.bubble( "onAnnounceEvent", { event: "onUpdateTorrentDetails", arguments: [ ] } );
+		//this.bubble( "onAnnounceEvent", { event: "onUpdateTorrentDetails", arguments: [ ] } );
 	},
 
 	select: function( sender ) {

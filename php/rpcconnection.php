@@ -9,7 +9,8 @@ $defaultTorrentFields = array( "addedDate", "name", "status", "doneDate", "haveV
 
 $torrentDetailsFields = array( "addedDate", "name", "status", "doneDate", "haveValid", "totalSize", "uploadRatio",
 								"rateDownload", "rateUpload", "percentDone", "files", "fileStats", "totalSize", "eta",
-								"downloadedEver", "leftUntilDone", "status", "id", "hashString", "downloadDir" );
+								"downloadedEver", "leftUntilDone", "status", "id", "hashString", "downloadDir", "hashString",
+								"dateCreated", "pieceCount", "pieceSize", "comment", "doneDate" );
 
 try {
 	$rpc = new TransmissionRPC( TRANSMISSION_RPC_URL, TRANSMISSION_RPC_USERNAME, TRANSMISSION_RPC_PASSWORD );

@@ -1,4 +1,4 @@
-body, ul, li, p, tr, td, th {
+body, ul, li, p, tr, td, th, h1, h2, h3, h4 {
 	margin: 0;
 	padding: 0;
 }
@@ -111,3 +111,34 @@ body, ul, li, p, tr, td, th {
 .browser li:hover {
 	background-color: #AAA;
 }
+
+/**** TorrentDetails ****/
+.torrentDetails {
+	overflow: auto;
+	padding: 5px;
+}
+
+.torrentDetails .torrentLeft {
+	float: left;
+	width: 600px;
+}
+
+.torrentDetails .torrentRight {
+	float: left;
+	width: 400px;
+}
+
+/**** TorrentDetailsInfo ****/
+.torrentDetailsInfo .label {
+	float: left;
+	width: 100px;
+}
+
+.torrentDetailsInfo .value {
+	float: left;
+	white-space: nowrap;
+}
+
+
+
+

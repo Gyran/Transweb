@@ -46,6 +46,7 @@ enyo.kind({
 	},
 
 	deselectAll: function( ) {
+		enyo.application.deselectAllTorrents( );
 		this.waterfall( "onDeselect" );
 	},
 

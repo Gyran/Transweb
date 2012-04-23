@@ -2,6 +2,7 @@ enyo.kind({
 	name: "TorrentTableHead",
 	kind: enyo.Control,
 	tag: "tr",
+	
 	create: function(){
 		this.inherited(arguments);
 		this.generateComponents();

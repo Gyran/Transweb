@@ -1,7 +1,7 @@
-function Torrent( ) {
+function Torrent() {
 	this.addedDate               = 0;
 	this.bandwidthPriority       = 0;
-	this.comment                 = 0;
+	this.comment                 = "";
 	this.corruptEver             = 0;
 	this.creator                 = "";
 	this.dateCreated             = 0;
@@ -64,7 +64,7 @@ function Torrent( ) {
 	this.uploadRatio             = 0.0;
 	this.wanted                  = [];
 	this.webseeds                = [];
-	this.webseedsSendingToUs     = 0	
+	this.webseedsSendingToUs     = 0;
 }
 
 Torrent.prototype = {
@@ -76,44 +76,44 @@ Torrent.prototype = {
 	TR_STATUS_SEED_WAIT       : 5,
 	TR_STATUS_SEED            : 6,
 
-	fill: function( props ) {
-		for( prop in props ) {
-			this[ prop ] = props[ prop ];
+	fill: function ( props ) {
+		for ( prop in props ) {
+			if ( props.hasOwnProperty(prop) ) {
+				this[prop] = props[prop];
+			}
 		}
 	},
 
-	isStopped: function() { return this.status === this.TR_STATUS_STOPPED },
-	isDownloading: function() { return this.status === this.TR_STATUS_DOWNLOAD },
-	isDone: function() { return this.leftUntilDone < 1 },
-	isActive: function() { return this.rateUpload + this.rateDownload },
-	isInactive: function() { return (this.rateUpload + this.rateDownload === 0) },
+	/* Getters */
+	getAddedDate: function () { return new Date( this.addedDate * 1000 ) },
+	getDoneDate: function () { return new Date( this.doneDate * 1000 ) },
+	getCreatedDate: function () { return new Date( this.dateCreated * 1000 ) },
+	/*/Getters */
 
-	getStatusString: function( ) {
+	isStopped: function () { return this.status === this.TR_STATUS_STOPPED },
+	isDownloading: function () { return this.status === this.TR_STATUS_DOWNLOAD },
+	isDone: function () { return this.leftUntilDone < 1 },
+	isActive: function () { return this.rateUpload + this.rateDownload },
+	isInactive: function () { return (this.rateUpload + this.rateDownload === 0) },
+
+	getStatusString: function () {
 		switch( this.status ) {
 			case this.TR_STATUS_STOPPED:
 				return "Stopped";
-				break;
 			case this.TR_STATUS_CHECK_WAIT:
 				return "Waiting to verify local files";
-				break;
 			case this.TR_STATUS_CHECK:
 				return "Verifying local files";
-				break;
 			case this.TR_STATUS_DOWNLOAD_WAIT:
 				return "Queued for download";
-				break;
 			case this.TR_STATUS_DOWNLOAD:
 				return "Downloading";
-				break;
 			case this.TR_STATUS_SEED_WAIT:
 				return "Queued for seeding";
-				break;
 			case this.TR_STATUS_SEED:
 				return "Seeding";
-				break;
 			default:
 				return "Unknown status";
-				break;
 		}
 	}
 }

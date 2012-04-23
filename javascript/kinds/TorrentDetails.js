@@ -1,8 +1,40 @@
 enyo.kind({
+	name: "TorrentDetailsInfo",
+	kind: enyo.Control,
+	classes: "torrentDetailsInfo floatcontainer",
+
+	published: {
+		label: "",
+		value: ""
+	},
+
+	components: [
+		{ name: "label", tag: "div", classes: "label" },
+		{ name: "value", tag: "div", classes: "value" }
+	],
+
+	create: function( ) {
+		this.inherited( arguments );
+
+		this.labelChanged( );
+		this.valueChanged( );
+	},
+
+	labelChanged: function( ) {
+		this.$.label.setContent( this.label );
+	},
+
+	valueChanged: function( ) {
+		this.$.value.setContent( this.value );
+	}
+
+});
+
+enyo.kind({
 	name: "TorrentDetails",
 	kind: enyo.Control,
-
 	tag: "div",
+	classes: "torrentDetails floatcontainer",
 
 	handlers: {
 		onUpdate: "update",
@@ -10,76 +42,29 @@ enyo.kind({
 	},
 
 	components: [
-		{ name: "fullpath", tag: "div" }
+		{ tag: "h2", content: "Transfer" },
+
+		{ tag: "h2", content: "Torrent" },
+		{ name: "fullpath", kind: "TorrentDetailsInfo", label: "Fullpath:" },
+		{ tag: "div", classes: "torrentLeft",
+			components: [
+				{ name: "totalSize", kind: "TorrentDetailsInfo", label: "Total size:" },
+				{ name: "hash", kind: "TorrentDetailsInfo", label: "Hash:" },
+				{ name: "addedOn", kind: "TorrentDetailsInfo", label: "Added on:" },
+				{ name: "completedOn", kind: "TorrentDetailsInfo", label: "Completed on:" }
+			]
+		},
+		{ tag: "div", classes: "torrentRight",
+			components: [
+				{ name: "createdOn", kind: "TorrentDetailsInfo", label: "Created on:" },
+				{ name: "piece", kind: "TorrentDetailsInfo", label: "Pieces:" },
+				{ name: "comment", kind: "TorrentDetailsInfo", label: "Comment:" }
+			]
+		}
 	],
 
 	published: {
-		addedDate: 0,
-		bandwidthPriority: 0,
-		comment: 0,
-		corruptEver: 0,
-		creator: "",
-		dateCreated: 0,
-		desiredAvailable: 0,
-		doneDate: 0,
-		downloadDir: "",
-		downloadedEver: 0,
-		downloadLimit: 0,
-		downloadLimited: null,
-		error: 0,
-		errorString: "",
-		eta: "",
-		files: [],
-		fileStats: [],
-		hashString: "",
-		haveUnchecked: 0,
-		haveValid: 0,
-		honorsSessionLimits: null,
-		torrentId: -1,
-		isFinished: null,
-		isPrivate: null,
-		isStalled: null,
-		leftUntilDone: 0,
-		magnetLink: 0,
-		manualAnnounceTime: 0,
-		maxConnectedPeers: 0,
-		metadataPercentComplete: 0.0,
-		torrentName: "",
-		peerLimit: 0,
-		peers: [],
-		peersConnected: 0,
-		peersFrom: null,
-		peersGettingFromUs: 0,
-		peersSendingToUs: 0,
-		percentDone: 0.0,
-		pieces: "",
-		piecesCount: 0,
-		piecesSize: 0,
-		priorities: [],
-		queuePosition: 0,
-		rateDownload: 0,
-		rateUpload: 0,
-		recheckProgress: 0.0,
-		secondsDownloading: 0,
-		secondsSeeding: 0,
-		seedIdleLimit: 0,
-		seedIdleMode: 0,
-		seedRatioLimit: 0.0,
-		seedRatioMode: 0,
-		sizeWhenDone: 0,
-		startDate: 0,
-		status: 0,
-		trackers: [],
-		trackerStats: [],
-		totalSize: 0,
-		torrentFile: "",
-		uploadedEver: 0,
-		uploadLimit: 0,
-		uploadLimited: null,
-		uploadRatio: 0.0,
-		wanted: [],
-		webseeds: [],
-		webseedsSendingToUs: 0
+		torrent: null
 	},
 
 	create: function() {
@@ -88,8 +73,9 @@ enyo.kind({
 	},
 
 	update: function() {
-		var torrent = enyo.application.selectedTorrents[0];
+		var torrent = enyo.application.getSelectedTorrents()[0];
 		if( torrent ) {
+			this.bubble( "onStartLoading" );
 			new enyo.Ajax( { url: "php/rpcconnection.php", method: "post" } ).
 				response( this, "gotDetails" ).
 				go( { method: "getTorrentDetails", torrent: torrent } );
@@ -99,31 +85,58 @@ enyo.kind({
 	},
 
 	gotDetails: function( sender, response ) {
-		torrent = response.arguments.torrents[0];
-		for( prop in torrent ) {
-			if( prop == "name" ) {
-				this[ "torrentName" ] = torrent[ prop ];
-			}else if( prop == "id" ) {
-				this[ "torrentId" ] = torrent[ prop ];
-			}
-			else {
-				this[ prop ] = torrent[ prop ];
-			}
+		this.bubble( "onStopLoading" );
+		var torrent = response.arguments.torrents[0];
+		this.torrent = new Torrent( );
+		this.torrent.fill(torrent);
+
+		this.fullpath( );
+		this.totalSize( );
+		this.hash( );
+		this.addedOn( );
+		this.createdOn( );
+		this.pieces( );
+		this.comment( );
+		this.completedOn( );
+
+		this.render( );
+	},
+
+	fullpath: function() {
+		var fullpath = this.torrent.downloadDir;
+		if( !fullpath.endsWith("/") ) {
+			fullpath += "/";
 		}
-
-		this.fullpathChanged( );
+		fullpath += this.torrent.name;
+		this.$.fullpath.setValue( fullpath );
 	},
 
-	fullpathChanged: function() {
-		this.$.fullpath.setContent( this.downloadDir + "/" + this.torrentName );
+	totalSize: function( ) {
+		this.$.totalSize.setValue( enyo.application.getSizeUnit( this.torrent.totalSize ) );
 	},
 
-	statusChanged: function() {
-		this.$.status.setContent( this.status );
+	hash: function( ) {
+		this.$.hash.setValue( this.torrent.hashString );
+	},
+
+	addedOn: function( ) {
+		this.$.addedOn.setValue( getDate( this.torrent.getAddedDate( ) ) );
+	},
+
+	createdOn: function( ) {
+		this.$.createdOn.setValue( getDate( this.torrent.getCreatedDate( ) ) );
+	},
+
+	pieces: function( ) {
+		this.$.piece.setValue( this.torrent.pieceCount + " * " + enyo.application.getSizeUnit( this.torrent.pieceSize ) );
+	},
+
+	comment: function( ) {
+		this.$.comment.setValue( this.torrent.comment );
+	},
+
+	completedOn: function( ) {
+		this.$.completedOn.setValue( getDate( this.torrent.getDoneDate( ) ) );
 	}
-
-
-
-
 
 });

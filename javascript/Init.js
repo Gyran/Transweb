@@ -88,14 +88,22 @@ enyo.application = {
 	},
 
 	selectTorrent: function( hash ) {
-		enyo.application.selectedTorrents.push( hash );
+		this.selectedTorrents.push( hash );
 	},
 
 	deselectTorrent: function( hash ) {
 		index = this.selectedTorrents.indexOf( hash );
 		if( index !== -1 ) {
-			enyo.application.selectedTorrents.splice( index, 1 );
+			this.selectedTorrents.splice( index, 1 );
 		}
+	},
+
+	deselectAllTorrents: function ( ) {
+		this.selectedTorrents = [ ];
+	},
+
+	getSelectedTorrents: function ( ) {
+		return this.selectedTorrents;
 	},
 
 	/* Filter functions */
