@@ -12,11 +12,12 @@ enyo.kind({
 		enyo.forEach(enyo.application.torrentColumns, this.addThComponent, this);
 	},
 
-	addThComponent: function(component){
+	addThComponent: function( component ){
 		this.createComponent({
 			kind: "TorrentTableHeadCell",
 			content: component.name,
-			container: this
+			container: this,
+			compareFunction: component.compareFunction
 		});
 	}
 

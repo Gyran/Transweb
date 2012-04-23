@@ -6,16 +6,16 @@ enyo.application = {
 			loading: "Loading............"
 		},
 	selectedTorrents: [],
-	torrentColumns: [ { name: "Status", field: "status" },
-						{ name: "Name", field: "torrentName" }, 
-						{ name: "Size", field: "totalSize" }, 
-						{ name: "Done", field: "percentDone" },
-						{ name: "Downloaded", field: "sizeWhenDone" },
-						{ name: "Ratio", field: "uploadRatio" }, 
-						{ name: "Date Added", field: "addedDate" },
-						{ name: "Upload rate", field: "rateUpload" }, 
-						{ name: "Download rate", field: "rateDownload" },
-						{ name: "ETA", field: "eta" }
+	torrentColumns: [ { name: "Status", field: "status", compareFunction: Torrent.compareByStatus },
+						{ name: "Name", field: "torrentName", compareFunction: Torrent.compareByName }, 
+						{ name: "Size", field: "totalSize", compareFunction: Torrent.compareBySize }, 
+						{ name: "Done", field: "percentDone", compareFunction: Torrent.compareByDone },
+						{ name: "Downloaded", field: "sizeWhenDone", compareFunction: Torrent.compareByDownloaded },
+						{ name: "Ratio", field: "uploadRatio", compareFunction: Torrent.compareByRatio }, 
+						{ name: "Date Added", field: "addedDate", compareFunction: Torrent.compareByAddedDate },
+						{ name: "Upload rate", field: "rateUpload", compareFunction: Torrent.compareByUploadRate }, 
+						{ name: "Download rate", field: "rateDownload", compareFunction: Torrent.compareByDownloadRate },
+						{ name: "ETA", field: "eta", compareFunction: Torrent.compareByETA }
 					],
 
 	_RatioUseGlobal        : 0,
@@ -47,6 +47,10 @@ enyo.application = {
 		}
 		n = Math.floor( Math.log( bytes ) / Math.log( this.transmissionSession.units.size_bytes ) );
 		return ( bytes / Math.pow( this.transmissionSession.units.size_bytes, n ) ).toFixed(2) + ' ' + this.transmissionSession.units.size_units[ n - 1 ];
+	},
+
+	getTimeFromMiliSec: function ( msec ) {
+		return this.getTimeFromSec( msec / 1000 );
 	},
 
 	getTimeFromSec: function( secs ) {
@@ -140,12 +144,30 @@ enyo.application = {
 		}
 		return false;
 	},
-	torrentFilterFunction: null
+
+	torrentFilterFunction: null,
 	/* /Filter functions */
+
+
+	prefs: {
+		torrentCompareFunction: null,
+		torrentFilterFunction: null,
+		torrentSortDirection: "desc"
+
+	},
+
+	getPref: function ( key ) {
+		return this.prefs[key];
+	},
+
+	setPref: function ( key, value ) {
+		this.prefs[key] = value;
+	}
 
 }
 /* default stuff */
-enyo.application.torrentFilterFunction = enyo.application.filterAll;
+enyo.application.setPref( "torrentFilterFunction", enyo.application.filterAll );
+enyo.application.setPref( "torrentCompareFunction", Torrent.compareByUploadRate );
 /*****/
 
 enyo.kind({

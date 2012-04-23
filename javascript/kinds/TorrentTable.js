@@ -15,30 +15,55 @@ enyo.kind({
 		onSelectAll: "selectAll"
 	},
 
+	torrents: [ ],
+
 	torrentsUpdated: function(){
-		this.listTorrents();
+		this.showTorrents();
 	},
 
 	create: function () {
 		this.inherited( arguments );
 	},
 
+	showTorrents: function () {
+		this.filterTorrents();
+		this.sortTorrents();
+		this.listTorrents();
+	},
+ 
+	filterTorrents: function () {
+		this.torrents = [ ];
+
+		filter = function ( torrent ) {
+			if ( enyo.application.getPref( "torrentFilterFunction" ).call( this, torrent ) ) {
+				this.torrents.push( torrent );
+			}
+		};
+
+		enyo.forEach( enyo.application.getTorrents( ), filter, this );
+	},
+
+	sortTorrents: function () {
+		Torrent.sortTorrents( 
+			this.torrents, 
+			enyo.application.getPref( "torrentCompareFunction" ),
+			enyo.application.getPref( "torrentSortDirection" )
+		);
+	},
+
 	listTorrents: function(){
 		this.destroyClientControls();
-		enyo.forEach( enyo.application.getTorrents( ), this.addTorrentToList, this );
+		enyo.forEach( this.torrents, this.addTorrentToList, this );
 		this.render();
 	},
 
 	addTorrentToList: function ( t ) {
-		if( enyo.application.torrentFilterFunction( t ) ){
-			newTorrent = { kind: "TorrentRow", container: this, torrent: t };
+		newTorrent = { kind: "TorrentRow", container: this, torrent: t };
 
-			if( enyo.application.selectedTorrents.indexOf(t.hashString) !== -1 ) {
-				newTorrent.classes = "selected";
-			}
-
-			this.createComponent(newTorrent);
+		if( enyo.application.selectedTorrents.indexOf(t.hashString) !== -1 ) {
+			newTorrent.classes = "selected";
 		}
+		this.createComponent(newTorrent);
 	},
 
 	tap: function( sender, event ) {

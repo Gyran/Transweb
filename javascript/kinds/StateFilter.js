@@ -23,7 +23,7 @@ enyo.kind({
 	},
 
 	tap: function( sender, event ) {
-		enyo.application.torrentFilterFunction = this.filterFunction;
+		enyo.application.setPref( "torrentFilterFunction", this.filterFunction);
 		this.bubble( "onForceUpdate" );
 	},
 

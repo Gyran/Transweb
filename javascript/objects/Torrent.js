@@ -1,4 +1,4 @@
-function Torrent() {
+function Torrent( props ) {
 	this.addedDate               = 0;
 	this.bandwidthPriority       = 0;
 	this.comment                 = "";
@@ -65,16 +65,12 @@ function Torrent() {
 	this.wanted                  = [];
 	this.webseeds                = [];
 	this.webseedsSendingToUs     = 0;
+
+	this.fill( props );
+
 }
 
 Torrent.prototype = {
-	TR_STATUS_STOPPED         : 0,
-	TR_STATUS_CHECK_WAIT      : 1,
-	TR_STATUS_CHECK           : 2,
-	TR_STATUS_DOWNLOAD_WAIT   : 3,
-	TR_STATUS_DOWNLOAD        : 4,
-	TR_STATUS_SEED_WAIT       : 5,
-	TR_STATUS_SEED            : 6,
 
 	fill: function ( props ) {
 		for ( prop in props ) {
@@ -86,34 +82,99 @@ Torrent.prototype = {
 
 	/* Getters */
 	getAddedDate: function () { return new Date( this.addedDate * 1000 ) },
-	getDoneDate: function () { return new Date( this.doneDate * 1000 ) },
 	getCreatedDate: function () { return new Date( this.dateCreated * 1000 ) },
+	getDoneDate: function () { return new Date( this.doneDate * 1000 ) },
+	getId: function () { return this.id },
+	getName: function () { return this.name },
+	getPercentDone: function () { return this.percentDone },
+	getRateUpload: function () { return this.rateUpload },
+	getStatus: function () { return this.status },
+	getUploadRatio: function () { return this.uploadRatio },
 	/*/Getters */
 
-	isStopped: function () { return this.status === this.TR_STATUS_STOPPED },
-	isDownloading: function () { return this.status === this.TR_STATUS_DOWNLOAD },
+	isStopped: function () { return this.status === Torrent.TR_STATUS_STOPPED },
+	isDownloading: function () { return this.status === Torrent.TR_STATUS_DOWNLOAD },
 	isDone: function () { return this.leftUntilDone < 1 },
 	isActive: function () { return this.rateUpload + this.rateDownload },
 	isInactive: function () { return (this.rateUpload + this.rateDownload === 0) },
 
 	getStatusString: function () {
 		switch( this.status ) {
-			case this.TR_STATUS_STOPPED:
+			case Torrent.TR_STATUS_STOPPED:
 				return "Stopped";
-			case this.TR_STATUS_CHECK_WAIT:
+			case Torrent.TR_STATUS_CHECK_WAIT:
 				return "Waiting to verify local files";
-			case this.TR_STATUS_CHECK:
+			case Torrent.TR_STATUS_CHECK:
 				return "Verifying local files";
-			case this.TR_STATUS_DOWNLOAD_WAIT:
+			case Torrent.TR_STATUS_DOWNLOAD_WAIT:
 				return "Queued for download";
-			case this.TR_STATUS_DOWNLOAD:
+			case Torrent.TR_STATUS_DOWNLOAD:
 				return "Downloading";
-			case this.TR_STATUS_SEED_WAIT:
+			case Torrent.TR_STATUS_SEED_WAIT:
 				return "Queued for seeding";
-			case this.TR_STATUS_SEED:
+			case Torrent.TR_STATUS_SEED:
 				return "Seeding";
 			default:
 				return "Unknown status";
 		}
 	}
 }
+
+// Torrent status codes
+Torrent.TR_STATUS_STOPPED = 0;
+Torrent.TR_STATUS_CHECK_WAIT = 1;
+Torrent.TR_STATUS_CHECK = 2;
+Torrent.TR_STATUS_DOWNLOAD_WAIT = 3;
+Torrent.TR_STATUS_DOWNLOAD = 4;
+Torrent.TR_STATUS_SEED_WAIT = 5;
+Torrent.TR_STATUS_SEED = 6;
+
+// Compare methods
+Torrent.compareById = function ( a, b ) {
+	return ( a.getId() - b.getId() );
+}
+
+Torrent.compareByStatus = function ( a, b ) {
+	return ( a.getStatus() - b.getStatus() );
+}
+
+Torrent.compareByName = function ( a, b ) {
+	an = a.getName().toLowerCase();
+	bn = b.getName().toLowerCase();
+	return ( an.localeCompare( bn ) );
+}
+
+Torrent.compareByDone = function ( a, b ) {
+	return ( a.getPercentDone() - a.getPercentDone() );
+}
+
+Torrent.compareByDownloaded = function ( a, b ) {
+	return;
+}
+
+Torrent.compareByRatio = function ( a, b ) {
+	return ( a.getUploadRatio() - b.getUploadRatio() );
+}
+
+Torrent.compareByAddedDate = function ( a, b ) {
+	return;
+}
+
+Torrent.compareByUploadRate = function ( a, b ) {
+	return ( a.getRateUpload() - b.getRateUpload() );
+}
+
+Torrent.compareDownloadRate = function ( a, b ) {
+	return;
+}
+
+Torrent.compareByETA = function ( a, b ) {
+	return;
+}
+
+// Sort torrents function
+Torrent.sortTorrents = function ( torrents, compareFunction, sortDirection ) {
+	torrents.sort( compareFunction );
+	return torrents;
+}
+
