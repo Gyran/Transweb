@@ -12,13 +12,13 @@ TorrentsUpdater.prototype = {
 		}
 		that.running = true;
 
-		addTorrent = function( torrent ) {
+		var addTorrent = function( torrent ) {
 			t = new Torrent( );
 			t.fill(torrent);
 			enyo.application.addTorrent( t );
 		}
 
-		response = function ( sender, response ) {
+		var response = function ( sender, response ) {
 			enyo.application.destoryTorrents( );
 			enyo.forEach( response.arguments.torrents, addTorrent , that );
 			that.running = false;

@@ -12,7 +12,7 @@ TransmissionSessionUpdater.prototype = {
 		}
 		that.running = true;
 
-		response = function ( sender, response ) {
+		var response = function ( sender, response ) {
 			enyo.application.transmissionSession = response.arguments;
 			that.running = false;
 			that.callback( "onTransmissionSessionUpdated" );
