@@ -84,10 +84,14 @@ Torrent.prototype = {
 	getAddedDate: function () { return new Date( this.addedDate * 1000 ) },
 	getCreatedDate: function () { return new Date( this.dateCreated * 1000 ) },
 	getDoneDate: function () { return new Date( this.doneDate * 1000 ) },
+	getDownloadedEver: function () { return this.downloadedEver },
+	getETA: function () { return this.eta },
 	getId: function () { return this.id },
 	getName: function () { return this.name },
 	getPercentDone: function () { return this.percentDone },
+	getRateDownload: function () { return this.rateDownload },
 	getRateUpload: function () { return this.rateUpload },
+	getTotalSize: function () { return this.totalSize },
 	getStatus: function () { return this.status },
 	getUploadRatio: function () { return this.uploadRatio },
 	/*/Getters */
@@ -144,12 +148,16 @@ Torrent.compareByName = function ( a, b ) {
 	return ( an.localeCompare( bn ) );
 }
 
+Torrent.compareBySize = function ( a, b ) {
+	return ( a.getTotalSize() - b.getTotalSize() );
+}
+
 Torrent.compareByDone = function ( a, b ) {
 	return ( a.getPercentDone() - a.getPercentDone() );
 }
 
 Torrent.compareByDownloaded = function ( a, b ) {
-	return;
+	return ( a.getDownloadedEver() - b.getDownloadedEver() );
 }
 
 Torrent.compareByRatio = function ( a, b ) {
@@ -157,19 +165,19 @@ Torrent.compareByRatio = function ( a, b ) {
 }
 
 Torrent.compareByAddedDate = function ( a, b ) {
-	return;
+	return ( a.getAddedDate() - b.getAddedDate() );
 }
 
 Torrent.compareByUploadRate = function ( a, b ) {
 	return ( a.getRateUpload() - b.getRateUpload() );
 }
 
-Torrent.compareDownloadRate = function ( a, b ) {
-	return;
+Torrent.compareByDownloadRate = function ( a, b ) {
+	return ( a.getRateDownload() - b.getRateDownload( ) );
 }
 
 Torrent.compareByETA = function ( a, b ) {
-	return;
+	return ( a.getETA() - b.getETA() ) ;
 }
 
 // Sort torrents function
