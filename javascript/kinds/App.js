@@ -39,12 +39,12 @@ enyo.kind({
 		this.inherited(arguments);
 		this.initPlugins();
 
-		this.addUpdater( enyo.bind( this, "updateTorrents" ) );
-		this.addUpdater( enyo.bind( this, "updateTransmissionSession" ) );
+		this.addUpdater( new TorrentsUpdater( enyo.bind( this, "updatersCallback" ) ) );
+		this.addUpdater( new TransmissionSessionUpdater( enyo.bind( this, "updatersCallback" ) ) );
 
-		this.update( );
+		this.update();
 
-		this.updateTimer = setInterval(enyo.bind(this, "waterfall", "onUpdate"), 1000);
+		this.updateTimer = setInterval(enyo.bind(this, "waterfall", "onUpdate"), 5000);
 	},
 
 	addUpdater: function ( updater ) {
@@ -52,9 +52,9 @@ enyo.kind({
 	},
 
 	runUpdaters: function ( ) {
+		this.startLoading();
 		for ( i = 0 ; i < this.updaters.length ; ++i ) {
-        	this.updaters[i].call( this );
-
+			this.updaters[i].update();
 		}
 	},
 
@@ -63,7 +63,7 @@ enyo.kind({
 	},
 
 	update: function(){
-        this.runUpdaters( );
+        this.runUpdaters();
 	},
 
 	initPlugins: function(){
@@ -86,42 +86,10 @@ enyo.kind({
 		this.$.smallLoading.hide();
 	},
 
-
-	/* Updaters */
-	updateTorrents: function ( ) {
-		var that = this;
-
-		addTorrent = function( torrent ) {
-			t = new Torrent( );
-			t.fill(torrent);
-			enyo.application.addTorrent( t );
-		}
-
-		response = function ( sender, response ) {
-			that.stopLoading( );
-			enyo.application.destoryTorrents( );
-			enyo.forEach( response.arguments.torrents, addTorrent , this );
-			that.waterfall( "onTorrentsUpdated" );
-		}
-
-		this.startLoading( );
-		new enyo.Ajax( { url: "php/rpcconnection.php", method: "post" } )
-		.response( response )
-		.go( { method: "getAll" } );
-	},
-
-	updateTransmissionSession: function ( ) {
-		var that = this;
-		response = function ( sender, response ) {
-			that.stopLoading( );
-			enyo.application.transmissionSession = response.arguments;
-			that.waterfall( "onTransmissionSessionUpdated" );
-		}
-
-		that.startLoading( );
-		new enyo.Ajax({url: "php/rpcconnection.php", method: "post" }).response( response ).go( { method: "transmissionSession" } );
+	updatersCallback: function ( event ) {
+		this.stopLoading();
+		this.waterfall( event );
 	}
 
-
-
 });
+

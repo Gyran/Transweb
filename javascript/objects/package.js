@@ -1,3 +1,5 @@
 enyo.depends(
-	"Torrent.js"
+	"Torrent.js",
+	"TorrentsUpdater.js",
+	"TransmissionSessionUpdater.js"
 );
