@@ -10,6 +10,7 @@ enyo.kind({
 	],
 
 	handlers: {
+		onUpdate: "torrentsUpdated",
 		onTorrentsUpdated: "torrentsUpdated",
 		onDeselectAll: "deselectAll",
 		onSelectAll: "selectAll"

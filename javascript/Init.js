@@ -17,7 +17,7 @@ enyo.application = {
 						{ name: "Download rate", field: "rateDownload", compareFunction: Torrent.compareByDownloadRate },
 						{ name: "ETA", field: "eta", compareFunction: Torrent.compareByETA }
 					],
-
+/* Not used atm
 	_RatioUseGlobal        : 0,
 	_RatioUseLocal         : 1,
 	_RatioUnlimited        : 2,
@@ -31,6 +31,9 @@ enyo.application = {
 	_TrackerWaiting        : 1,
 	_TrackerQueued         : 2,
 	_TrackerActive         : 3,
+*/
+	_PREF_SORT_DESC        : 0,
+	_PREF_SORT_ASC         : 1,
 
 	/* help functions */
 	getSpeedUnit: function( bytes ) {
@@ -110,50 +113,10 @@ enyo.application = {
 		return this.selectedTorrents;
 	},
 
-	/* Filter functions */
-	filterAll: function( torrent ) {
-		return true;
-	},
-	filterStopped: function( torrent ) {
-		if( torrent.isStopped( ) ) {
-			return true;
-		}
-		return false;
-	},
-	filterDownloading: function( torrent ) {
-		if( torrent.isDownloading( ) ) {
-				return true;
-		}
-		return false;
-	},
-	filterCompleted: function( torrent ) {
-		if( torrent.isDone( ) ) {
-				return true;
-		}
-		return false;
-	},
-	filterActive: function( torrent ) {
-		if( torrent.isActive( ) ) {
-				return true;
-		}
-		return false;
-	},
-	filterInactive: function( torrent ) {
-		if( torrent.isInactive( ) ) {
-				return true;
-		}
-		return false;
-	},
-
-	torrentFilterFunction: null,
-	/* /Filter functions */
-
-
 	prefs: {
 		torrentCompareFunction: null,
 		torrentFilterFunction: null,
-		torrentSortDirection: "desc"
-
+		torrentSortDirection: this._PREF_SORT_ASC,
 	},
 
 	getPref: function ( key ) {
@@ -163,10 +126,9 @@ enyo.application = {
 	setPref: function ( key, value ) {
 		this.prefs[key] = value;
 	}
-
 }
-/* default stuff */
-enyo.application.setPref( "torrentFilterFunction", enyo.application.filterAll );
+/* default preference */
+enyo.application.setPref( "torrentFilterFunction", Torrent.filterAll );
 enyo.application.setPref( "torrentCompareFunction", Torrent.compareByUploadRate );
 /*****/
 

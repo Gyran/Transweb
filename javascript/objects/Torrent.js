@@ -96,27 +96,27 @@ Torrent.prototype = {
 	getUploadRatio: function () { return this.uploadRatio },
 	/*/Getters */
 
-	isStopped: function () { return this.status === Torrent.TR_STATUS_STOPPED },
-	isDownloading: function () { return this.status === Torrent.TR_STATUS_DOWNLOAD },
+	isStopped: function () { return this.status === Torrent._TR_STATUS_STOPPED },
+	isDownloading: function () { return this.status === Torrent._TR_STATUS_DOWNLOAD },
 	isDone: function () { return this.leftUntilDone < 1 },
 	isActive: function () { return this.rateUpload + this.rateDownload },
 	isInactive: function () { return (this.rateUpload + this.rateDownload === 0) },
 
 	getStatusString: function () {
 		switch( this.status ) {
-			case Torrent.TR_STATUS_STOPPED:
+			case Torrent._TR_STATUS_STOPPED:
 				return "Stopped";
-			case Torrent.TR_STATUS_CHECK_WAIT:
+			case Torrent._TR_STATUS_CHECK_WAIT:
 				return "Waiting to verify local files";
-			case Torrent.TR_STATUS_CHECK:
+			case Torrent._TR_STATUS_CHECK:
 				return "Verifying local files";
-			case Torrent.TR_STATUS_DOWNLOAD_WAIT:
+			case Torrent._TR_STATUS_DOWNLOAD_WAIT:
 				return "Queued for download";
-			case Torrent.TR_STATUS_DOWNLOAD:
+			case Torrent._TR_STATUS_DOWNLOAD:
 				return "Downloading";
-			case Torrent.TR_STATUS_SEED_WAIT:
+			case Torrent._TR_STATUS_SEED_WAIT:
 				return "Queued for seeding";
-			case Torrent.TR_STATUS_SEED:
+			case Torrent._TR_STATUS_SEED:
 				return "Seeding";
 			default:
 				return "Unknown status";
@@ -125,13 +125,13 @@ Torrent.prototype = {
 }
 
 // Torrent status codes
-Torrent.TR_STATUS_STOPPED = 0;
-Torrent.TR_STATUS_CHECK_WAIT = 1;
-Torrent.TR_STATUS_CHECK = 2;
-Torrent.TR_STATUS_DOWNLOAD_WAIT = 3;
-Torrent.TR_STATUS_DOWNLOAD = 4;
-Torrent.TR_STATUS_SEED_WAIT = 5;
-Torrent.TR_STATUS_SEED = 6;
+Torrent._TR_STATUS_STOPPED = 0;
+Torrent._TR_STATUS_CHECK_WAIT = 1;
+Torrent._TR_STATUS_CHECK = 2;
+Torrent._TR_STATUS_DOWNLOAD_WAIT = 3;
+Torrent._TR_STATUS_DOWNLOAD = 4;
+Torrent._TR_STATUS_SEED_WAIT = 5;
+Torrent._TR_STATUS_SEED = 6;
 
 // Compare methods
 Torrent.compareById = function ( a, b ) {
@@ -183,6 +183,36 @@ Torrent.compareByETA = function ( a, b ) {
 // Sort torrents function
 Torrent.sortTorrents = function ( torrents, compareFunction, sortDirection ) {
 	torrents.sort( compareFunction );
+
+	if ( sortDirection === enyo.application._PREF_SORT_DESC ) {
+		torrents.reverse();
+	}
+
 	return torrents;
+}
+
+// Filter functions
+Torrent.filterAll = function( torrent ) {
+	return true;
+}
+
+Torrent.filterStopped = function( torrent ) {
+	return torrent.isStopped();
+}
+
+Torrent.filterDownloading = function( torrent ) {
+	return torrent.isDownloading();
+}
+
+Torrent.filterCompleted = function( torrent ) {
+	return torrent.isDone()
+}
+
+Torrent.filterActive = function( torrent ) {
+	return torrent.isActive();
+}
+
+Torrent.filterInactive = function( torrent ) {
+	return torrent.isInactive();
 }
 

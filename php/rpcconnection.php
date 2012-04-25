@@ -26,16 +26,12 @@ switch( $_POST["method"] ) {
 		echo json_encode($rpc->sget());
 		break;
 	case 'addTorrentURL':
-		//$torrent = file_get_contents( $_POST["url"] );
 		$inUrl = $_POST["url"];
 		$path = $_POST["path"];
 
 		$extra = array();
 
-		if( stripos($inUrl, "magnet:?", 0) === 0 ) {
-			
-		} else {
-			// url
+		if( !stripos($inUrl, "magnet:?", 0) === 0 ) {
 			$url = parse_url( $inUrl );
 			$allCookies = unserialize( COOKIES );
 			if ( in_array( $url["host"], $allCookies ) ) {
@@ -61,7 +57,6 @@ switch( $_POST["method"] ) {
 		print_r($_GET);
 		print_r($_POST);
 		echo '</pre>';
-		# code...
 		break;
 }
 
