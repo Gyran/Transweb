@@ -30,17 +30,17 @@ switch( $_POST["method"] ) {
 		$inUrl = $_POST["url"];
 		$path = $_POST["path"];
 
+		$extra = array();
+
 		if( stripos($inUrl, "magnet:?", 0) === 0 ) {
-			$extra = array();
+			
 		} else {
 			// url
 			$url = parse_url( $inUrl );
 			$allCookies = unserialize( COOKIES );
-			$cookies = $allCookies[$url["host"]];
-
-			$extra = array(
-					"cookies" => $cookies
-				);
+			if ( in_array( $url["host"], $allCookies ) ) {
+				$extra["cookies"] = $allCookies[$url["host"]];
+			}
 		}
 		$result = $rpc->add( $inUrl, $path, $extra );
 
