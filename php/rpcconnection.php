@@ -26,9 +26,26 @@ switch( $_POST["method"] ) {
 		echo json_encode($rpc->sget());
 		break;
 	case 'addTorrentURL':
-		$torrent = file_get_contents($_POST["url"]);
+		//$torrent = file_get_contents( $_POST["url"] );
+		$inUrl = $_POST["url"];
+		$path = $_POST["path"];
 
-		echo json_encode( $rpc->add_metainfo( $torrent, $_POST["path"] ) );
+		if( stripos($inUrl, "magnet:?", 0) === 0 ) {
+			$extra = array();
+		} else {
+			// url
+			$url = parse_url( $inUrl );
+			$allCookies = unserialize( COOKIES );
+			$cookies = $allCookies[$url["host"]];
+
+			$extra = array(
+					"cookies" => $cookies
+				);
+		}
+		$result = $rpc->add( $inUrl, $path, $extra );
+
+		echo json_encode( $result );
+
 		break;
 	case 'startTorrents':
 		echo json_encode( $rpc->start( $_POST["torrents"] ) );
