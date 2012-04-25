@@ -35,7 +35,7 @@ enyo.kind({
 	filterTorrents: function () {
 		this.torrents = [ ];
 
-		filter = function ( torrent ) {
+		var filter = function ( torrent ) {
 			if ( enyo.application.getPref( "torrentFilterFunction" ).call( this, torrent ) ) {
 				this.torrents.push( torrent );
 			}

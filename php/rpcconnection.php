@@ -5,7 +5,7 @@ require_once( dirname( __FILE__ ) . '/classes/TransmissionRPC.class.php' );
 
 $defaultTorrentFields = array( "addedDate", "name", "status", "doneDate", "haveValid", "totalSize", "uploadRatio",
 								"rateDownload", "rateUpload", "percentDone", "fileStats", "totalSize", "eta",
-								"downloadedEver", "leftUntilDone", "status", "hashString" );
+								"downloadedEver", "leftUntilDone", "status", "hashString", "downloadDir" );
 
 $torrentDetailsFields = array( "addedDate", "name", "status", "doneDate", "haveValid", "totalSize", "uploadRatio",
 								"rateDownload", "rateUpload", "percentDone", "files", "fileStats", "totalSize", "eta",

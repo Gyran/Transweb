@@ -84,6 +84,7 @@ Torrent.prototype = {
 	getAddedDate: function () { return new Date( this.addedDate * 1000 ) },
 	getCreatedDate: function () { return new Date( this.dateCreated * 1000 ) },
 	getDoneDate: function () { return new Date( this.doneDate * 1000 ) },
+	getDownloadDir: function () { return this.downloadDir },
 	getDownloadedEver: function () { return this.downloadedEver },
 	getETA: function () { return this.eta },
 	getId: function () { return this.id },
@@ -91,10 +92,12 @@ Torrent.prototype = {
 	getPercentDone: function () { return this.percentDone },
 	getRateDownload: function () { return this.rateDownload },
 	getRateUpload: function () { return this.rateUpload },
-	getTotalSize: function () { return this.totalSize },
 	getStatus: function () { return this.status },
+	getTotalSize: function () { return this.totalSize },
 	getUploadRatio: function () { return this.uploadRatio },
 	/*/Getters */
+
+	getDownloadFolder: function () { return this.getDownloadDir().match( /([^\/]*)\/?$/ )[1] },
 
 	isStopped: function () { return this.status === Torrent._TR_STATUS_STOPPED },
 	isDownloading: function () { return this.status === Torrent._TR_STATUS_DOWNLOAD },
