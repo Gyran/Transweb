@@ -1,9 +1,13 @@
 enyo.kind({
 	name: "Panel",
 	tag: "div",
+	classes: "panel",
 
 	components: [
+
 		{ name: "statesFilter", kind: "StatesFilter" },
-		{ name: "foldersFilter", kind: "FoldersFilter" }
+		{ kind: "Divider" },
+		{ name: "foldersFilter", kind: "FoldersFilter" },
+		{ kind: "Divider" }
 	]
 });

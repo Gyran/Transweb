@@ -118,6 +118,11 @@ body, ul, li, p, tr, td, th, h1, h2, h3, h4 {
 	padding: 5px;
 }
 
+.torrentDetails .transfersCol {
+	float: left;
+	width: 345px;
+}
+
 .torrentDetails .torrentLeft {
 	float: left;
 	width: 600px;
@@ -131,14 +136,23 @@ body, ul, li, p, tr, td, th, h1, h2, h3, h4 {
 /**** TorrentDetailsInfo ****/
 .torrentDetailsInfo .label {
 	float: left;
-	width: 100px;
+	width: 120px;
 }
 
 .torrentDetailsInfo .value {
 	float: left;
 	white-space: nowrap;
+	overflow: hidden;
 }
 
+/**** Divider ****/
+.divider {
+	height: 10px;
+	background-color: #000;
+}
 
-
+/**** Panel ****/
+.panel li:hover {
+	background-color: #79a5ff;
+}
 
