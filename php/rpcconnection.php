@@ -3,14 +3,21 @@
 require_once( dirname( __FILE__ ) . '/../config/config.php' );
 require_once( dirname( __FILE__ ) . '/classes/TransmissionRPC.class.php' );
 
-$defaultTorrentFields = array( "addedDate", "name", "status", "doneDate", "haveValid", "totalSize", "uploadRatio",
-								"rateDownload", "rateUpload", "percentDone", "fileStats", "totalSize", "eta",
-								"downloadedEver", "leftUntilDone", "status", "hashString", "downloadDir" );
+$defaultTorrentFields = array( 
+	"addedDate", "name", "status", "doneDate", "haveValid", "totalSize", "uploadRatio",
+	"rateDownload", "rateUpload", "percentDone", "fileStats", "totalSize", "eta",
+	"downloadedEver", "leftUntilDone", "status", "hashString", "downloadDir"
+	);
 
-$torrentDetailsFields = array( "addedDate", "name", "status", "doneDate", "haveValid", "totalSize", "uploadRatio",
-								"rateDownload", "rateUpload", "percentDone", "files", "fileStats", "totalSize", "eta",
-								"downloadedEver", "leftUntilDone", "status", "id", "hashString", "downloadDir", "hashString",
-								"dateCreated", "pieceCount", "pieceSize", "comment", "doneDate" );
+$torrentDetailsFields = array( 
+	"addedDate", "name", "status", "doneDate", "haveValid", "totalSize", "uploadRatio",
+	"dateCreated", "pieceCount", "pieceSize", "comment", "doneDate",
+	"downloadedEver", "leftUntilDone", "status", "id", "hashString", "downloadDir", "hashString",
+	"rateDownload", "rateUpload", "percentDone", "files", "fileStats", "totalSize", "eta",
+	"downloadLimit", "downloadLimited", "trackers", "trackerStats", "errorString", "uploadedEver",
+	"uploadLimit", "uploadLimited", "seedRatioMode", "seedRatioLimit", "honorsSessionLimits"
+
+	);
 
 try {
 	$rpc = new TransmissionRPC( TRANSMISSION_RPC_URL, TRANSMISSION_RPC_USERNAME, TRANSMISSION_RPC_PASSWORD );

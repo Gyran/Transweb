@@ -61,7 +61,7 @@ enyo.kind({
 	addTorrentToList: function ( t ) {
 		newTorrent = { kind: "TorrentRow", container: this, torrent: t };
 
-		if( enyo.application.selectedTorrents.indexOf(t.hashString) !== -1 ) {
+		if( enyo.application.selectedTorrents.indexOf( t.getHashString() ) !== -1 ) {
 			newTorrent.classes = "selected";
 		}
 		this.createComponent(newTorrent);

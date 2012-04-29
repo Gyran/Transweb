@@ -37,19 +37,21 @@ enyo.application = {
 
 	/* help functions */
 	getSpeedUnit: function( bytes ) {
-		if( bytes == 0 ) {
+		var units = this.transmissionSession.getUnits();
+		if( bytes === 0 ) {
 			return ;
 		}
-		n = Math.floor( Math.log( bytes ) / Math.log( this.transmissionSession.units.speed_bytes ) );
-		return ( bytes / Math.pow( this.transmissionSession.units.speed_bytes, n ) ).toFixed(2) + ' ' + this.transmissionSession.units.speed_units[ n - 1 ];
+		n = Math.floor( Math.log( bytes ) / Math.log( units.getSpeedBytes() ) );
+		return ( bytes / Math.pow( units.getSpeedBytes(), n ) ).toFixed( 2 ) + ' ' + units.getSpeedUnit( n - 1 );
 	},
 
 	getSizeUnit: function( bytes ) {
-		if( bytes == 0 ) {
+		var units = this.transmissionSession.getUnits();
+		if( bytes === 0 ) {
 			return ;
 		}
-		n = Math.floor( Math.log( bytes ) / Math.log( this.transmissionSession.units.size_bytes ) );
-		return ( bytes / Math.pow( this.transmissionSession.units.size_bytes, n ) ).toFixed(2) + ' ' + this.transmissionSession.units.size_units[ n - 1 ];
+		n = Math.floor( Math.log( bytes ) / Math.log( units.getSizeBytes() ) );
+		return ( bytes / Math.pow( units.getSizeBytes(), n ) ).toFixed( 2 ) + ' ' + units.getSizeUnit( n - 1 );
 	},
 
 	getTimeFromMiliSec: function ( msec ) {
@@ -154,11 +156,11 @@ enyo.kind({
 		this.waitUntilReady();
 	},
 
-	getTransmissionSession: function(inSender, inResponse){
-		if(!inResponse){
+	getTransmissionSession: function(sender, response){
+		if( !response ) {
 			this.setContent("Transmission is not running");
-		}else{
-			enyo.application.transmissionSession = inResponse.arguments;
+		} else {
+			enyo.application.transmissionSession = new TransmissionSession( response.arguments );
 			this.init();
 		}
 	},

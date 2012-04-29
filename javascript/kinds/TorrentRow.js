@@ -34,7 +34,7 @@ enyo.kind({
 
 	select: function( sender ) {
 		this.addClass( "selected" );
-		enyo.application.selectTorrent( this.torrent.hashString );
+		enyo.application.selectTorrent( this.torrent.getHashString() );
 		this.bubble( "onAnnounceEvent", { event: "onUpdateTorrentDetails", arguments: [ ] } );
 	},
 
@@ -73,11 +73,12 @@ enyo.kind({
 	},
  
 	torrentNameChanged: function(){
-		this.$.torrentName.setContent( this.torrent.name );
+		this.$.torrentName.setContent( this.torrent.getName() );
 	},
 
 	uploadRatioChanged: function(){
-		switch( this.uploadRatio ) {
+		var uploadRatio = this.torrent.getUploadRatio();
+		switch( uploadRatio ) {
 			case -1:
 				this.$.uploadRatio.setContent( enyo.application.language.noRatio );
 				break;
@@ -85,15 +86,15 @@ enyo.kind({
 				this.$.uploadRatio.setContent( "inf" );
 				break;
 			default:
-				this.$.uploadRatio.setContent( this.torrent.uploadRatio.toFixed( 2 ) );
+				this.$.uploadRatio.setContent( uploadRatio.toFixed( 2 ) );
 				break;
 
 		}
 	},
 
 	addedDateChanged: function(){
-		date = new Date( this.torrent.addedDate * 1000 );
-		this.$.addedDate.setContent( getDate( date ) );
+		//date = new Date( this.torrent.addedDate * 1000 );
+		this.$.addedDate.setContent( getDate( this.torrent.getAddedDate() ) );
 	},
 
 	statusChanged: function(){
@@ -101,19 +102,19 @@ enyo.kind({
 	},
 
 	rateUploadChanged: function(){
-		this.$.rateUpload.setContent( enyo.application.getSpeedUnit( this.torrent.rateUpload ) );
+		this.$.rateUpload.setContent( enyo.application.getSpeedUnit( this.torrent.getRateUpload() ) );
 	},
 
 	rateDownloadChanged: function(){
-		this.$.rateDownload.setContent(enyo.application.getSpeedUnit(this.torrent.rateDownload));
+		this.$.rateDownload.setContent( enyo.application.getSpeedUnit( this.torrent.getRateDownload() ) );
 	},
 
 	percentDoneChanged: function(){
-		this.$.percentDone.setContent( ( this.torrent.percentDone * 100 ).toFixed( 0 ) + "%" );
+		this.$.percentDone.setContent( ( this.torrent.getPercentDone() * 100 ).toFixed( 0 ) + "%" );
 	},
 
 	totalSizeChanged: function(){
-		this.$.totalSize.setContent( enyo.application.getSizeUnit( this.torrent.totalSize ) );
+		this.$.totalSize.setContent( enyo.application.getSizeUnit( this.torrent.getTotalSize() ) );
 	},
 
 	etaChanged: function() {
@@ -121,17 +122,12 @@ enyo.kind({
 			if( this.eta < 0 ) {
 				this.$.eta.setContent( "Unknown" );
 			} else {
-				this.$.eta.setContent( enyo.application.getTimeFromSec( this.torrent.eta ) );
+				this.$.eta.setContent( enyo.application.getTimeFromSec( this.torrent.getETA() ) );
 			}
 		}
 	},
 
 	downloadedEverChanged: function() {
-		this.$.downloadedEver.setContent( enyo.application.getSizeUnit( this.torrent.downloadedEver ) );
+		this.$.downloadedEver.setContent( enyo.application.getSizeUnit( this.torrent.getDownloadedEver() ) );
 	}
-
-
-
-
-
 });

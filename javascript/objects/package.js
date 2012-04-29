@@ -1,5 +1,9 @@
 enyo.depends(
+    "TrackerStats.js",
+    "Tracker.js",
 	"Torrent.js",
 	"TorrentsUpdater.js",
+    "Units.js",
+    "TransmissionSession.js",
 	"TransmissionSessionUpdater.js"
 );

@@ -1,112 +1,180 @@
-function Torrent( props ) {
-	this.addedDate               = 0;
-	this.bandwidthPriority       = 0;
-	this.comment                 = "";
-	this.corruptEver             = 0;
-	this.creator                 = "";
-	this.dateCreated             = 0;
-	this.desiredAvailable        = 0;
-	this.doneDate                = 0;
-	this.downloadDir             = "";
-	this.downloadedEver          = 0;
-	this.downloadLimit           = 0;
-	this.downloadLimited         = null;
-	this.error                   = 0;
-	this.errorString             = "";
-	this.eta                     = "";
-	this.files                   = [];
-	this.fileStats               = [];
-	this.hashString              = "";
-	this.haveUnchecked           = 0;
-	this.haveValid               = 0;
-	this.honorsSessionLimits     = null;
-	this.id                      = -1;
-	this.isFinished              = null;
-	this.isPrivate               = null;
-	this.isStalled               = null;
-	this.leftUntilDone           = 0;
-	this.magnetLink              = 0;
-	this.manualAnnounceTime      = 0;
-	this.maxConnectedPeers       = 0;
-	this.metadataPercentComplete = 0.0;
-	this.name                    = "";
-	this.peerLimit               = 0;
-	this.peers                   = [];
-	this.peersConnected          = 0;
-	this.peersFrom               = null;
-	this.peersGettingFromUs      = 0;
-	this.peersSendingToUs        = 0;
-	this.percentDone             = 0.0;
-	this.pieces                  = "";
-	this.piecesCount             = 0;
-	this.piecesSize              = 0;
-	this.priorities              = [];
-	this.queuePosition           = 0;
-	this.rateDownload            = 0;
-	this.rateUpload              = 0;
-	this.recheckProgress         = 0.0;
-	this.secondsDownloading      = 0;
-	this.secondsSeeding          = 0;
-	this.seedIdleLimit           = 0;
-	this.seedIdleMode            = 0;
-	this.seedRatioLimit          = 0.0;
-	this.seedRatioMode           = 0;
-	this.sizeWhenDone            = 0;
-	this.startDate               = 0;
-	this.status                  = 0;
-	this.trackers                = [];
-	this.trackerStats            = [];
-	this.totalSize               = 0;
-	this.torrentFile             = "";
-	this.uploadedEver            = 0;
-	this.uploadLimit             = 0;
-	this.uploadLimited           = null;
-	this.uploadRatio             = 0.0;
-	this.wanted                  = [];
-	this.webseeds                = [];
-	this.webseedsSendingToUs     = 0;
+function Torrent ( props ) {
+	this._addedDate               = 0;
+	this._bandwidthPriority       = 0;
+	this._comment                 = "";
+	this._corruptEver             = 0;
+	this._creator                 = "";
+	this._dateCreated             = 0;
+	this._desiredAvailable        = 0;
+	this._doneDate                = 0;
+	this._downloadDir             = "";
+	this._downloadedEver          = 0;
+	this._downloadLimit           = 0;
+	this._downloadLimited         = null;
+	this._error                   = 0;
+	this._errorString             = "";
+	this._eta                     = "";
+	this._files                   = [];
+	this._fileStats               = [];
+	this._hashString              = "";
+	this._haveUnchecked           = 0;
+	this._haveValid               = 0;
+	this._honorsSessionLimits     = false;
+	this._id                      = -1;
+	this._isFinished              = null;
+	this._isPrivate               = null;
+	this._isStalled               = null;
+	this._leftUntilDone           = 0;
+	this._magnetLink              = 0;
+	this._manualAnnounceTime      = 0;
+	this._maxConnectedPeers       = 0;
+	this._metadataPercentComplete = 0.0;
+	this._name                    = "";
+	this._peerLimit               = 0;
+	this._peers                   = [];
+	this._peersConnected          = 0;
+	this._peersFrom               = null;
+	this._peersGettingFromUs      = 0;
+	this._peersSendingToUs        = 0;
+	this._percentDone             = 0.0;
+	this._pieces                  = "";
+	this._pieceCount              = 0;
+	this._pieceSize               = 0;
+	this._priorities              = [];
+	this._queuePosition           = 0;
+	this._rateDownload            = 0;
+	this._rateUpload              = 0;
+	this._recheckProgress         = 0.0;
+	this._secondsDownloading      = 0;
+	this._secondsSeeding          = 0;
+	this._seedIdleLimit           = 0;
+	this._seedIdleMode            = 0;
+	this._seedRatioLimit          = 0.0;
+	this._seedRatioMode           = 0;
+	this._sizeWhenDone            = 0;
+	this._startDate               = 0;
+	this._status                  = 0;
+	this._trackers                = [];
+	this._trackerStats            = [];
+	this._totalSize               = 0;
+	this._torrentFile             = "";
+	this._uploadedEver            = 0;
+	this._uploadLimit             = 0;
+	this._uploadLimited           = null;
+	this._uploadRatio             = 0.0;
+	this._wanted                  = [];
+	this._webseeds                = [];
+	this._webseedsSendingToUs     = 0;
 
-	this.fill( props );
+	if ( props !== undefined ) {
+		this.fill( props );
+	}
 
 }
 
 Torrent.prototype = {
 
 	fill: function ( props ) {
+		var that = this;
 		for ( prop in props ) {
 			if ( props.hasOwnProperty(prop) ) {
-				this[prop] = props[prop];
+
+				if ( prop === "trackerStats" ) {
+					enyo.forEach( props["trackerStats"], function ( trackerStats ) {
+						this["_trackerStats"].push( new TrackerStats( trackerStats ) );	
+					}, this );
+				}
+				else {
+					this["_" + prop] = props[prop];
+				}
 			}
 		}
 	},
 
 	/* Getters */
-	getAddedDate: function () { return new Date( this.addedDate * 1000 ) },
-	getCreatedDate: function () { return new Date( this.dateCreated * 1000 ) },
-	getDoneDate: function () { return new Date( this.doneDate * 1000 ) },
-	getDownloadDir: function () { return this.downloadDir },
-	getDownloadedEver: function () { return this.downloadedEver },
-	getETA: function () { return this.eta },
-	getId: function () { return this.id },
-	getName: function () { return this.name },
-	getPercentDone: function () { return this.percentDone },
-	getRateDownload: function () { return this.rateDownload },
-	getRateUpload: function () { return this.rateUpload },
-	getStatus: function () { return this.status },
-	getTotalSize: function () { return this.totalSize },
-	getUploadRatio: function () { return this.uploadRatio },
-	/*/Getters */
+	getAddedDate: function () { return new Date( this._addedDate * 1000 ) },
+	getCreatedDate: function () { return new Date( this._dateCreated * 1000 ) },
+	getDoneDate: function () { return new Date( this._doneDate * 1000 ) },
+	getDownloadDir: function () { return this._downloadDir },
+	getDownloadedEver: function () { return this._downloadedEver },
+	getDownloadLimit: function () { return this._downloadLimit },
+	getDownloadLimited: function () { return this._downloadLimited },
+	getErrorString: function () { return this._errorString },
+	getETA: function () { return this._eta },
+	getHashString: function () { return this._hashString },
+	getId: function () { return this._id },
+	getName: function () { return this._name },
+	getPercentDone: function () { return this._percentDone },
+	getRateDownload: function () { return this._rateDownload },
+	getRateUpload: function () { return this._rateUpload },
+	getStatus: function () { return this._status },
+	getTotalSize: function () { return this._totalSize },
+	getTrackers: function () { return this._trackers },
+	getTrackerStats: function () { return this._trackerStats },
+	getUploadedEver: function () { return this._uploadedEver },
+	getUploadLimit: function () { return this._uploadLimit },
+	getUploadLimited: function () { return this._uploadLimited },
+	getUploadRatio: function () { return this._uploadRatio },
+	getPieceCount: function () { return this._pieceCount },
+	getPieceSize: function () { return this._pieceSize },
+	getComment: function () { return this._comment },
+	getLeftUntilDone: function () { return this._leftUntilDone },
+	getSeedRatioLimit: function () { return this._seedRatioLimit },
+	getSeedRatioMode: function () { return this._seedRatioMode },
+	getHonorsSessionLimits: function () { return this._honorsSessionLimits },
+	/* /Getters */
 
+	/* Custom getters */
 	getDownloadFolder: function () { return this.getDownloadDir().match( /([^\/]*)\/?$/ )[1] },
+	getFirstTrackerStatus: function () {
+		var ret = null;
+		enyo.forEach( this.getTrackerStats(), function ( trackerStats ) {
+			if ( ret !== null ) {
+				return;
+			}
+			if ( !trackerStats.isBackup() ) {
+				ret = trackerStats;
+			}
+		}, this );
 
-	isStopped: function () { return this.status === Torrent._TR_STATUS_STOPPED },
-	isDownloading: function () { return this.status === Torrent._TR_STATUS_DOWNLOAD },
-	isDone: function () { return this.leftUntilDone < 1 },
-	isActive: function () { return this.rateUpload + this.rateDownload },
-	isInactive: function () { return (this.rateUpload + this.rateDownload === 0) },
+		return ret;
+	},
+	getNumSeeders: function () {
+		var seeders = 0;
+		enyo.forEach( this.getTrackerStats(), function ( trackerStats ) {
+			seeders += trackerStats.getSeederCount();
+		}, this );
+		return seeders;
+	},
+	getRatioLimit: function () {
+		switch ( this.getSeedRatioMode() ){
+			case 0:
+				if ( this.getHonorsSessionLimits() ) {
+					if ( enyo.application.transmissionSession.getSeedRatioLimited() ) {
+						return enyo.application.transmissionSession.getSeedRatioLimit();
+					}
+				}
+				break;
+			case 1:
+				return this.getSeedRatioLimit();
+			case 2:
+				break;
+			default:
+				break;
+		}
+		return -1;
+	},
+
+	/* /Custom getters */
+
+	isStopped: function () { return this.getStatus() === Torrent._TR_STATUS_STOPPED },
+	isDownloading: function () { return this.getStatus() === Torrent._TR_STATUS_DOWNLOAD },
+	isDone: function () { return this.getLeftUntilDone() < 1 },
+	isActive: function () { return this.getRateUpload() + this.getRateDownload() },
+	isInactive: function () { return (this.getRateUpload() + this.getRateDownload() === 0) },
 
 	getStatusString: function () {
-		switch( this.status ) {
+		switch( this.getStatus() ) {
 			case Torrent._TR_STATUS_STOPPED:
 				return "Stopped";
 			case Torrent._TR_STATUS_CHECK_WAIT:
