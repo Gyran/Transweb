@@ -15,7 +15,8 @@ $torrentDetailsFields = array(
 	"downloadedEver", "leftUntilDone", "status", "id", "hashString", "downloadDir", "hashString",
 	"rateDownload", "rateUpload", "percentDone", "files", "fileStats", "totalSize", "eta",
 	"downloadLimit", "downloadLimited", "trackers", "trackerStats", "errorString", "uploadedEver",
-	"uploadLimit", "uploadLimited", "seedRatioMode", "seedRatioLimit", "honorsSessionLimits"
+	"uploadLimit", "uploadLimited", "seedRatioMode", "seedRatioLimit", "honorsSessionLimits", "activityDate",
+	"corruptEver"
 
 	);
 

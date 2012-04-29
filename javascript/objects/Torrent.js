@@ -1,4 +1,5 @@
 function Torrent ( props ) {
+	this._activityDate			  = 0;
 	this._addedDate               = 0;
 	this._bandwidthPriority       = 0;
 	this._comment                 = "";
@@ -92,7 +93,10 @@ Torrent.prototype = {
 	},
 
 	/* Getters */
+	getActivityDate: function () { return new Date( this._activityDate * 1000 ) },
 	getAddedDate: function () { return new Date( this._addedDate * 1000 ) },
+	getComment: function () { return this._comment },
+	getCorruptEver: function () { return this._corruptEver },
 	getCreatedDate: function () { return new Date( this._dateCreated * 1000 ) },
 	getDoneDate: function () { return new Date( this._doneDate * 1000 ) },
 	getDownloadDir: function () { return this._downloadDir },
@@ -102,11 +106,17 @@ Torrent.prototype = {
 	getErrorString: function () { return this._errorString },
 	getETA: function () { return this._eta },
 	getHashString: function () { return this._hashString },
+	getHonorsSessionLimits: function () { return this._honorsSessionLimits },
 	getId: function () { return this._id },
+	getLeftUntilDone: function () { return this._leftUntilDone },
 	getName: function () { return this._name },
 	getPercentDone: function () { return this._percentDone },
+	getPieceCount: function () { return this._pieceCount },
+	getPieceSize: function () { return this._pieceSize },
 	getRateDownload: function () { return this._rateDownload },
 	getRateUpload: function () { return this._rateUpload },
+	getSeedRatioLimit: function () { return this._seedRatioLimit },
+	getSeedRatioMode: function () { return this._seedRatioMode },
 	getStatus: function () { return this._status },
 	getTotalSize: function () { return this._totalSize },
 	getTrackers: function () { return this._trackers },
@@ -115,13 +125,6 @@ Torrent.prototype = {
 	getUploadLimit: function () { return this._uploadLimit },
 	getUploadLimited: function () { return this._uploadLimited },
 	getUploadRatio: function () { return this._uploadRatio },
-	getPieceCount: function () { return this._pieceCount },
-	getPieceSize: function () { return this._pieceSize },
-	getComment: function () { return this._comment },
-	getLeftUntilDone: function () { return this._leftUntilDone },
-	getSeedRatioLimit: function () { return this._seedRatioLimit },
-	getSeedRatioMode: function () { return this._seedRatioMode },
-	getHonorsSessionLimits: function () { return this._honorsSessionLimits },
 	/* /Getters */
 
 	/* Custom getters */
@@ -145,6 +148,13 @@ Torrent.prototype = {
 			seeders += trackerStats.getSeederCount();
 		}, this );
 		return seeders;
+	},
+	getNumLeechers: function () {
+		var leechers = 0;
+		enyo.forEach( this.getTrackerStats(), function ( trackerStats ) {
+			leechers += trackerStats.getLeecherCount();
+		}, this );
+		return leechers;
 	},
 	getRatioLimit: function () {
 		switch ( this.getSeedRatioMode() ){

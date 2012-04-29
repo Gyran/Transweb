@@ -46,6 +46,8 @@ TrackerStats.prototype = {
     getHost: function () { return this._host },
     getIsBackup: function () { return this._isBackup },
     getSeederCount: function () { return this._seederCount },
+    getLeecherCount: function () { return this._leecherCount },
+    getNextAnnounceTime: function () { return new Date( this._nextAnnounceTime * 1000 ) },
     /* /Getters */
 
     getHostName: function () { return this.getHost().replace(/.+?\/\/(.+?):.*/, "$1") },

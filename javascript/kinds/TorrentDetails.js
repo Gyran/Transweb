@@ -50,7 +50,7 @@ enyo.kind({
 				{ name: "downloaded", kind: "TorrentDetailsInfo", label: "Downloaded:" },
 				{ name: "downloadSpeed", kind: "TorrentDetailsInfo", label: "Download Speed:" },
 				{ name: "downloadLimit", kind: "TorrentDetailsInfo", label: "Download limit:" },
-				{ name: "seeds", kind: "TorrentDetailsInfo", label: "Seeds:" },
+				{ name: "seeds", kind: "TorrentDetailsInfo", label: "Seeders:" },
 				{ name: "tracker", kind: "TorrentDetailsInfo", label: "Tracker:" }
 			]
 		},
@@ -60,7 +60,7 @@ enyo.kind({
 				{ name: "uploaded", kind: "TorrentDetailsInfo", label: "Uploaded:" },
 				{ name: "uploadSpeed", kind: "TorrentDetailsInfo", label: "Upload speed:" },
 				{ name: "uploadLimit", kind: "TorrentDetailsInfo", label: "Upload limit:" },
-				{ name: "peers", kind: "TorrentDetailsInfo", label: "Peers:" },
+				{ name: "leechers", kind: "TorrentDetailsInfo", label: "Leechers:" },
 				{ name: "nextAnnounce", kind: "TorrentDetailsInfo", label: "Next announce:" },
 			]
 		},
@@ -131,7 +131,7 @@ enyo.kind({
 		this.uploaded();
 		this.uploadSpeed();
 		this.uploadLimit();
-		this.peers();
+		this.leechers();
 		this.nextAnnounce();
 		this.remaining();
 		this.wasted();
@@ -201,20 +201,23 @@ enyo.kind({
 		}
 	},
 
-	peers: function () {
-		// TODO
+	leechers: function () {
+		this.$.leechers.setValue( this.torrent.getNumLeechers() );
 	},
 
 	nextAnnounce: function () {
-		// TODO
+		var nextTime = this.torrent.getFirstTrackerStatus().getNextAnnounceTime();
+		this.$.nextAnnounce.setValue( getDate( nextTime ) );
 	},
 
 	remaining: function () {
-		// TODO
+		var remaining = this.torrent.getLeftUntilDone();
+		this.$.remaining.setValue( enyo.application.getSizeUnit( remaining ) );
 	},
 
 	wasted: function () {
-		// TODO
+		var corrupted = this.torrent.getCorruptEver();
+		this.$.wasted.setValue( enyo.application.getSizeUnit( corrupted ) );
 	},
 
 	ratio: function () {
@@ -231,7 +234,8 @@ enyo.kind({
 	},
 
 	lastActivity: function () {
-		// TODO
+		var activityTime = this.torrent.getActivityDate();
+		this.$.lastActivity.setValue( getDate( activityTime ) );
 	},
 
 	fullpath: function() {
