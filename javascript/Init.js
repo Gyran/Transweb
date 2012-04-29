@@ -157,9 +157,9 @@ enyo.kind({
 	},
 
 	getTransmissionSession: function(sender, response){
-		if( !response ) {
-			this.setContent("Transmission is not running");
-		} else {
+		if(!response){
+			this.setContent("Could not connect to Transmission. Check settings and make sure Transmission is running.");
+		}else{
 			enyo.application.transmissionSession = new TransmissionSession( response.arguments );
 			this.init();
 		}
