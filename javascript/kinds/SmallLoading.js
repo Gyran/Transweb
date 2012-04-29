@@ -2,7 +2,6 @@ enyo.kind({
 	name: "SmallLoading",
 	kind: enyo.Control,
 
-	content: "Loading",
 	tag: "div",
 
 	waiters: 0,

@@ -42,6 +42,9 @@ body, ul, li, p, tr, td, th, h1, h2, h3, h4 {
 	position: fixed;
 	right: 0;
 	top: 0;
+	width: 32px;
+	height: 32px;
+	background-image: url( 'images/ajax-loader.gif' );
 }
 
 /**** TorrentTableHolder ****/
