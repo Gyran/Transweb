@@ -14,7 +14,7 @@ enyo.kind({
 
 	create: function(){
 		this.inherited(arguments);
-		this.$.downloadPath.setValue(enyo.application.transmissionSession.download_dir);
+		this.$.downloadPath.setValue( enyo.application.transmissionSession.getDownloadDir() );
 	},
 
 	addTorrentTap: function(sender, e){

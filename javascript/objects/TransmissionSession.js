@@ -69,6 +69,7 @@ TransmissionSession.prototype = {
     },
 
     /* Getters */
+    getDownloadDir: function () { return this._download_dir },
     getSeedRatioLimit: function () { return this._seedRatioLimit },
     getSeedRatioLimited: function () { return this._seedRatioLimited },
     getUnits: function () { return this._units }
