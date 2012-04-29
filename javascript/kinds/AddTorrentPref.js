@@ -8,7 +8,8 @@ enyo.kind({
 	components: [
 		{ name: "downloadPath", kind: "SelectFolderInput" },
 		{ name: "link", kind: enyo.Input, placeholder: "URL to torrent", type: "text" },
-		{ kind: enyo.Button, content: "Add torrent", ontap: "addTorrentTap" }
+		{ kind: enyo.Button, content: "Add torrent", ontap: "addTorrentTap" },
+		{ name: "close", kind: "Button", content: "Close", ontap: "closeTap" }
 	],
 
 	create: function(){
@@ -26,7 +27,11 @@ enyo.kind({
 				path: path });
 	},
 
-	torrentAdded: function(sender, res){
+	closeTap: function(sender, e) {
+		this.bubble( "onAnnounceEvent", { event: "onHidePref" } );
+	},
 
+	torrentAdded: function(sender, res){
+		this.bubble( "onAnnounceEvent", { event: "onHidePref" } );
 	}
 });

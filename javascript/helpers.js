@@ -4,7 +4,10 @@ String.prototype.endsWith = function(str)
 }
 
 function getDate(date){
-	return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+	function pad(n) {
+		return n < 10 ? ("0" + n) : n;
+	}
+	return date.getFullYear() + "-" + pad(date.getMonth() + 1) + "-" + pad(date.getDate()) + " " + pad(date.getHours()) + ":" + pad(date.getMinutes()) + ":" + pad(date.getSeconds());
 }
 
 function bytesToSize(bytes) {
