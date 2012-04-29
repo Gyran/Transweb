@@ -4,7 +4,8 @@ enyo.kind({
 	tag: "div",
 
 	handlers: {
-		onShowPref: "showPref"
+		onShowPref: "showPref",
+		onHidePref: "hidePref"
 	},
 
 	showPref: function( sender, args ) {
@@ -16,5 +17,9 @@ enyo.kind({
 		});
 		this.render();
 		this.show();
+	},
+
+	hidePref: function( sender ) {
+		this.hide();
 	}
 });
