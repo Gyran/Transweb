@@ -2,6 +2,7 @@
 
 require_once( dirname( __FILE__ ) . '/../config/config.php' );
 require_once( dirname( __FILE__ ) . '/classes/TransmissionRPC.class.php' );
+require_once( dirname( __FILE__ ) . '/classes/CookiesManager.class.php' );
 
 $defaultTorrentFields = array( 
 	"addedDate", "name", "status", "doneDate", "haveValid", "totalSize", "uploadRatio",
@@ -39,13 +40,16 @@ switch( $_POST["method"] ) {
 
 		$extra = array();
 
-		if( !stripos($inUrl, "magnet:?", 0) === 0 ) {
+		if ( !( stripos( $inUrl, "magnet:?", 0 ) === 0 ) ) {
 			$url = parse_url( $inUrl );
-			$allCookies = unserialize( COOKIES );
-			if ( in_array( $url["host"], $allCookies ) ) {
-				$extra["cookies"] = $allCookies[$url["host"]];
+			$cm = new CookiesManager( COOKIES_FILE );
+			$cookies = $cm->getCookie( $url["host"] );
+			if ( $cookies ) {
+				echo $cookies;
+				$extra["cookies"] = $cookies;
 			}
 		}
+
 		$result = $rpc->add( $inUrl, $path, $extra );
 
 		echo json_encode( $result );

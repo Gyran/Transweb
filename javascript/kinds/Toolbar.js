@@ -8,7 +8,8 @@ enyo.kind({
 	components: [
 		{ kind: "AddTorrentToolbarButton" },
 		{ kind: "StartTorrentToolbarButton" },
-		{ kind: "StopTorrentToolbarButton" }
+		{ kind: "StopTorrentToolbarButton" },
+		{ kind: "CookiesToolbarButton" }
 		
 	]
 })

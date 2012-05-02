@@ -12,9 +12,6 @@ define( 'TRANSMISSION_RPC_URL', TRANSMISSION_RPC_PROTOCOL . TRANSMISSION_RPC_HOS
 
 define( 'TOP_BROWSE_FOLDER', '/' );
 
-define( 'COOKIES', serialize( array( 
-	
-	 ) ) );
-
+define( 'COOKIES_FILE' ,  dirname( __FILE__ ) . '/../settings/cookies' );
 
 ?>
