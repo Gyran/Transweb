@@ -3,23 +3,34 @@ enyo.kind({
 	kind: enyo.Control,
 	tag: "div",
 
+	classes: "preference",
+
 	handlers: {
 		onShowPref: "showPref",
 		onHidePref: "hidePref"
 	},
 
+	components: [
+		{ kind: enyo.Button, content: "close", ontap: "closePrefs" },
+		{ name: "holder" }
+	],
+
 	showPref: function( sender, args ) {
 		prefKind = args[0];
-		this.destroyClientControls();
-		this.createComponent({
+		this.$.holder.destroyClientControls();
+		this.$.holder.createComponent({
 			kind: prefKind,
-			container: this
 		});
-		this.render();
+		this.$.holder.render();
 		this.show();
 	},
 
 	hidePref: function( sender ) {
 		this.hide();
+	},
+
+	closePrefs: function () {
+		this.bubble( "onAnnounceEvent", { event: "onHidePref" } );
 	}
+
 });

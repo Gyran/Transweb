@@ -13,7 +13,7 @@ enyo.kind({
 		},
 		{ tag: "div", classes: "rightColumn",
 			components: [
-				{ name: "smallLoading", kind: "SmallLoading", classes: "smallLoading", showing: false },
+				{ name: "smallLoading", kind: "SmallLoading", showing: false },
 				{ name: "toolbar", kind: "Toolbar" },
 				{ name: "torrentTable", kind: "TorrentTableHolder" },
 				{ name: "preferenceHolder", kind: "PreferenceHolder", showing: false },
