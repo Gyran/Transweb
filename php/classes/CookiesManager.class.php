@@ -7,6 +7,7 @@ class CookiesManager {
 
     public function __construct ( $file ) {
         $this->file = $file;
+        $this->cookies = array();
         $fp = fopen( $this->file, 'a' );
         if ( !$fp ) {
             throw new Exception("Could not open file.", 1);
