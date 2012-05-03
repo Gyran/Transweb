@@ -8,6 +8,7 @@ enyo.kind({
 		{ name: "statesFilter", kind: "StatesFilter" },
 		{ kind: "Divider" },
 		{ name: "foldersFilter", kind: "FoldersFilter" },
-		{ kind: "Divider" }
+		{ kind: "Divider" },
+        { name: "trackersFilter", kind: "TrackersFilter" }
 	]
 });

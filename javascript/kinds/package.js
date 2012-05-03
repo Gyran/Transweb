@@ -22,6 +22,8 @@ enyo.depends(
 	"StatesFilter.js",
 	"FolderFilter.js",
 	"FoldersFilter.js",
+	"TrackerFilter.js",
+	"TrackersFilter.js",
 	"Panel.js",
 	"App.js"
 );
