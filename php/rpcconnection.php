@@ -7,7 +7,7 @@ require_once( dirname( __FILE__ ) . '/classes/CookiesManager.class.php' );
 $defaultTorrentFields = array( 
 	"addedDate", "name", "status", "doneDate", "haveValid", "totalSize", "uploadRatio",
 	"rateDownload", "rateUpload", "percentDone", "fileStats", "totalSize", "eta",
-	"downloadedEver", "leftUntilDone", "status", "hashString", "downloadDir"
+	"downloadedEver", "leftUntilDone", "status", "hashString", "downloadDir", "trackerStats"
 	);
 
 $torrentDetailsFields = array( 

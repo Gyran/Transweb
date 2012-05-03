@@ -44,7 +44,7 @@ enyo.kind({
 
 		this.update();
 
-		//this.updateTimer = setInterval(enyo.bind(this, "waterfall", "onUpdate"), 5000);
+		this.updateTimer = setInterval(enyo.bind(this, "waterfall", "onUpdate"), 5000);
 	},
 
 	addUpdater: function ( updater ) {

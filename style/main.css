@@ -24,6 +24,8 @@ body, ul, li, p, tr, td, th, h1, h2, h3, h4 {
 /**** Columns ****/
 .leftColumn {
 	width: 200px;
+	height: 650px;
+	overflow: auto;
 	float: left;
 }
 
@@ -167,3 +169,4 @@ body, ul, li, p, tr, td, th, h1, h2, h3, h4 {
 	background-color: #79a5ff;
 }
 
+.
