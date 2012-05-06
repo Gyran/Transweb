@@ -6,7 +6,7 @@ enyo.kind({
 
     components: [
         { name: "cookiesStr", kind: enyo.TextArea, disabled: true, content: "Loading..." },
-        { tag: "br" },
+        { tag: "div", content: "Format: host|cookie1=value1;cooke2=value2;" },
         { name: "saveCookies", kind: "Button", content: "Save cookies", ontap: "saveCookies" }
     ],
 
