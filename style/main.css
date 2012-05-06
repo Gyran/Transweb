@@ -3,6 +3,14 @@ body, ul, li, p, tr, td, th, h1, h2, h3, h4 {
 	padding: 0;
 }
 
+ul, li {
+	list-style: none none;
+}
+
+table {
+	border-collapse: collapse;
+}
+
 /*** csscreator hack ***/
 .floatcontainer:after{
     content: "."; 
@@ -20,6 +28,16 @@ body, ul, li, p, tr, td, th, h1, h2, h3, h4 {
        .floatcontainer{display:block;}
     /* End Hack */ 
 /****************/
+
+/**** General ****/
+button {
+	background-color: #EEE;
+	border: 1px solid #BBB;
+}
+
+.selected {
+	background-color: #a7d6f1;
+}
 
 /**** Columns ****/
 .leftColumn {
@@ -58,27 +76,45 @@ body, ul, li, p, tr, td, th, h1, h2, h3, h4 {
 
 /**** TorrentTable ****/
 .torrentTable {
-	border-collapse: collapse;
+	
 }
 
 /**** Torrent ****/
-.torrent {
-	width: 100px;
-	overflow: hidden;
-}
-
-.selected {
-	background-color: #79a5ff;
+.torrentTable td {
+	background-color: #FFFBF0;
 }
 
 .torrentTable td, .torrentTable th {
 	padding: 3px 5px;
 	white-space: nowrap;
+	border: 1px solid #697774;
 }
 
+.torrentTable th {
+	background-color: #B8B6B2;
+	border-bottom-width: 2px;
+}
+
+/**** DetailsTabs ****/
+.detailsTabs {
+	padding-top: 5px;
+	
+}
+
+.detailsTabs li {
+	margin-left: 3px;
+	padding: 2px;
+	float: left;
+	border: 1px solid #999;
+}
+
+.detailsTabs li.selected {
+	border-bottom: 0px;
+
+}
 /**** DetailsHolder ****/
 .detailsHolder {
-	border: 1px solid #0F0;
+	border: 1px solid #000;
 }
 
 /**** Preference ****/
@@ -158,6 +194,10 @@ body, ul, li, p, tr, td, th, h1, h2, h3, h4 {
 	overflow: hidden;
 }
 
+.transfersCol .torrentDetailsInfo .value {
+	width: 220px;
+}
+
 /**** Divider ****/
 .divider {
 	height: 10px;
@@ -169,4 +209,15 @@ body, ul, li, p, tr, td, th, h1, h2, h3, h4 {
 	background-color: #79a5ff;
 }
 
-.
+/**** Preferences ****/
+.preference {
+	padding-top: 30px;
+}
+
+button.closePrefButton {
+	position: absolute;
+	right: 2px;
+	top: 2px;
+}
+
+

@@ -1,6 +1,8 @@
 enyo.depends(
     "TrackerStats.js",
     "Tracker.js",
+    "File.js",
+    "FileStats.js",
 	"Torrent.js",
 	"TorrentsUpdater.js",
     "Units.js",

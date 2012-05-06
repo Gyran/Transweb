@@ -84,6 +84,14 @@ Torrent.prototype = {
 					enyo.forEach( props["trackerStats"], function ( trackerStats ) {
 						this["_trackerStats"].push( new TrackerStats( trackerStats ) );	
 					}, this );
+				} else if ( prop === "files" ) {
+					enyo.forEach( props["files"], function ( files ) {
+						this["_files"].push( new File( files ) );	
+					}, this );
+				} else if ( prop === "fileStats" ) {
+					enyo.forEach( props["fileStats"], function ( fileStats ) {
+						this["_fileStats"].push( new FileStats( fileStats ) );	
+					}, this );
 				}
 				else {
 					this["_" + prop] = props[prop];
@@ -105,6 +113,8 @@ Torrent.prototype = {
 	getDownloadLimited: function () { return this._downloadLimited },
 	getErrorString: function () { return this._errorString },
 	getETA: function () { return this._eta },
+	getFiles: function () { return this._files },
+	getFileStats: function () { return this._fileStats },
 	getHashString: function () { return this._hashString },
 	getHonorsSessionLimits: function () { return this._honorsSessionLimits },
 	getId: function () { return this._id },

@@ -1,14 +1,14 @@
-function File( props ) {
+function FileStats( props ) {
     this._bytesCompleted = 0;
-    this._length         = 0;
-    this._name           = "";
+    this._wanted         = false;
+    this._priority       = 0;
 
     if ( props !== undefined ) {
         this.fill( props );
     }
 }
 
-File.prototype = {
+FileStats.prototype = {
     fill: function ( props ) {
         for ( prop in props ) {
             if ( props.hasOwnProperty(prop) ) {
@@ -18,12 +18,12 @@ File.prototype = {
     },
 
     /**** Getters ****/
-    getName: function () { return this._name },
-    getLength: function () { return this._length },
     getBytesCompleted: function () { return this._bytesCompleted },
+    getWanted: function () { return this._wanted },
+    getPriority: function () { return this._priority }
     /**** /Getters ****/
-
-    /**** Custom Getters ****/
-    getFileName: function () { return this.getName().replace( /(.*\/)/, "" )  }
-    /**** /Custom Getters ****/
 }
+
+FileStats.PRIORITY_LOW    = -1;
+FileStats.PRIORITY_NORMAL =  0;
+FileStats.PRIORITY_HIGH   =  1;

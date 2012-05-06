@@ -18,7 +18,10 @@ $torrentDetailsFields = array(
 	"downloadLimit", "downloadLimited", "trackers", "trackerStats", "errorString", "uploadedEver",
 	"uploadLimit", "uploadLimited", "seedRatioMode", "seedRatioLimit", "honorsSessionLimits", "activityDate",
 	"corruptEver"
+	);
 
+$torrentFilesFields = array(
+	"files", "fileStats"
 	);
 
 try {
@@ -63,6 +66,9 @@ switch( $_POST["method"] ) {
 		break;
 	case 'getTorrentDetails':
 		echo json_encode( $rpc->get( $_POST["torrent"], $torrentDetailsFields ) );	
+		break;
+	case 'getTorrentFiles':
+		echo json_encode( $rpc->get( $_POST["torrent"], $torrentFilesFields ) );	
 		break;
 	default:
 		echo '<pre>';

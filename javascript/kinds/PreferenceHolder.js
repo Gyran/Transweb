@@ -11,7 +11,7 @@ enyo.kind({
 	},
 
 	components: [
-		{ kind: enyo.Button, content: "close", ontap: "closePrefs" },
+		{ kind: enyo.Button, content: "X", ontap: "closePrefs", classes: "closePrefButton" },
 		{ name: "holder" }
 	],
 

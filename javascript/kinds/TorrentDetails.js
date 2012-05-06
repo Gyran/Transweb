@@ -2,6 +2,7 @@ enyo.kind({
 	name: "TorrentDetailsInfo",
 	kind: enyo.Control,
 	classes: "torrentDetailsInfo floatcontainer",
+	tag: "div",
 
 	published: {
 		label: "",
@@ -252,7 +253,7 @@ enyo.kind({
 	},
 
 	hash: function( ) {
-		this.$.hash.setValue( this.torrent.hashString );
+		this.$.hash.setValue( this.torrent.getHashString() );
 	},
 
 	addedOn: function( ) {
