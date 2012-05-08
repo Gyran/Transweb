@@ -13,7 +13,14 @@ enyo.kind({
         { name: "size", tag: "td" },
         { name: "downloaded", tag: "td" },
         { name: "done", tag: "td" },
-        { name: "priority", tag: "td" }
+        { tag: "td", components: [
+            { name: "priority", kind: enyo.Select, components: [
+                { content: FileStats._DONT_DOWNLOAD_NAME, value: FileStats._DONT_DOWNLOAD },
+                { content: FileStats._PRIORITY_LOW_NAME, value: FileStats.__PRIORITY_LOW },
+                { content: FileStats._PRIORITY_NORMAL_NAME, value: FileStats.__PRIORITY_NORMAL },
+                { content: FileStats._PRIORITY_HIGH_NAME, value: FileStats.__PRIORITY_HIGH }
+            ] }
+        ] }
     ],
 
 
@@ -45,8 +52,23 @@ enyo.kind({
     },
 
     priority: function () {
-        this.$.priority.setContent( this.fileStats.getPriority() );
-
+        console.log(this.fileStats.getPriority());
+        var select = 0;
+        switch ( this.fileStats.getPriority() ) {
+            case FileStats._PRIORITY_NORMAL:
+                select = 2;
+                break;
+            case FileStats._PRIORITY_HIGH:
+                select = 3;
+                break;
+            case FileStats._PRIORITY_LOW:
+                select = 1;
+                break;
+            default:
+                break;
+        }
+        this.$.priority.setSelected( select );
+        
     }
 
 

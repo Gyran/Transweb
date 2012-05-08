@@ -9,7 +9,8 @@ enyo.kind({
 		{ kind: "AddTorrentToolbarButton" },
 		{ kind: "StartTorrentToolbarButton" },
 		{ kind: "StopTorrentToolbarButton" },
-		{ kind: "CookiesToolbarButton" }
+		{ kind: "CookiesToolbarButton" },
+		{ kind: "DeleteTorrentAndFilesToolbarButton" }
 		
 	]
 })

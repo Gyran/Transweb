@@ -70,6 +70,9 @@ switch( $_POST["method"] ) {
 	case 'getTorrentFiles':
 		echo json_encode( $rpc->get( $_POST["torrent"], $torrentFilesFields ) );	
 		break;
+	case 'deleteTorrentsAndFiles':
+		echo json_encode( $rpc->remove( $_POST["torrents"], true ) );
+		break;
 	default:
 		echo '<pre>';
 		print_r($_GET);

@@ -13,6 +13,7 @@ enyo.depends(
 	"AddTorrentToolbarButton.js",
 	"StartTorrentToolbarButton.js",
 	"StopTorrentToolbarButton.js",
+	"DeleteTorrentAndFilesToolbarButton.js",
 	"Toolbar.js",
 	"DetailsTab.js",
 	"TorrentDetails.js",
