@@ -27,15 +27,28 @@ $torrentFilesFields = array(
 try {
 	$rpc = new TransmissionRPC( TRANSMISSION_RPC_URL, TRANSMISSION_RPC_USERNAME, TRANSMISSION_RPC_PASSWORD );
 } catch ( Exception $e ) {
-	die( json_encode( false ) );
+	die( formatResponse( false, null, $e->getMessage()) );
 }
 
 switch( $_POST["method"] ) {
 	case 'getAll':
-		echo json_encode( $rpc->get( array( ), $defaultTorrentFields ) );	
+		$result = $rpc->get( array( ), $defaultTorrentFields );
+
+		if ( $result->result != "success" ) {
+			echo formatResponse( false, null, $result->result );
+		} else {
+			echo formatResponse( true, $result->arguments );
+		}
 		break;
 	case 'transmissionSession':
-		echo json_encode($rpc->sget());
+		$result = $rpc->sget();
+
+		if ( $result->result != "success" ) {
+			echo formatResponse( false, null, $result->result );
+		} else {
+			echo formatResponse( true, $result->arguments );
+		}
+		
 		break;
 	case 'addTorrentURL':
 		$inUrl = $_POST["url"];
@@ -48,30 +61,63 @@ switch( $_POST["method"] ) {
 			$cm = new CookiesManager( COOKIES_FILE );
 			$cookies = $cm->getCookie( $url["host"] );
 			if ( $cookies ) {
-				echo $cookies;
 				$extra["cookies"] = $cookies;
 			}
 		}
 
 		$result = $rpc->add( $inUrl, $path, $extra );
 
-		echo json_encode( $result );
+		if ( $result->result != "success" ) {
+			echo formatResponse( false, null, $result->result );
+		} else {
+			echo formatResponse( true, $result->arguments ); 
+		}
 
 		break;
 	case 'startTorrents':
-		echo json_encode( $rpc->start( $_POST["torrents"] ) );
+		$result = $rpc->start( $_POST["torrents"] );
+
+		if ( $result->result != "success" ) {
+			echo formatResponse( false, null, $result->result );
+		} else {
+			echo formatResponse( true, $result->arguments ); 
+		}
 		break;
 	case 'stopTorrents':
-		echo json_encode( $rpc->stop( $_POST["torrents"] ) );
+		$result = $rpc->stop( $_POST["torrents"] );
+
+		if ( $result->result != "success" ) {
+			echo formatResponse( false, null, $result->result );
+		} else {
+			echo formatResponse( true, $result->arguments ); 
+		}
 		break;
 	case 'getTorrentDetails':
-		echo json_encode( $rpc->get( $_POST["torrent"], $torrentDetailsFields ) );	
+		$result = $rpc->get( $_POST["torrent"], $torrentDetailsFields );
+
+		if ( $result->result != "success" ) {
+			echo formatResponse( false, null, $result->result );
+		} else {
+			echo formatResponse( true, $result->arguments ); 
+		}
 		break;
 	case 'getTorrentFiles':
-		echo json_encode( $rpc->get( $_POST["torrent"], $torrentFilesFields ) );	
+		$result = $rpc->get( $_POST["torrent"], $torrentFilesFields );
+
+		if ( $result->result != "success" ) {
+			echo formatResponse( false, null, $result->result );
+		} else {
+			echo formatResponse( true, $result->arguments ); 
+		}
 		break;
 	case 'deleteTorrentsAndFiles':
-		echo json_encode( $rpc->remove( $_POST["torrents"], true ) );
+		$result = $rpc->remove( $_POST["torrents"], true );
+
+		if ( $result->result != "success" ) {
+			echo formatResponse( false, null, $result->result );
+		} else {
+			echo formatResponse( true, $result->arguments ); 
+		}
 		break;
 	default:
 		echo '<pre>';
@@ -79,6 +125,19 @@ switch( $_POST["method"] ) {
 		print_r($_POST);
 		echo '</pre>';
 		break;
+}
+
+function formatResponse ( $success, $arguments = null, $message = "" ) {
+	$data = array();
+	if ( $success ) {
+		$data["success"] = true;
+		$data["arguments"] = $arguments;
+	} else {
+		$data["success"] = false;
+		$data["message"] = $message;
+	}
+
+	return json_encode( $data );
 }
 
 

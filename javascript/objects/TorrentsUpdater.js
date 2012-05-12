@@ -19,10 +19,14 @@ TorrentsUpdater.prototype = {
 		}
 
 		var response = function ( sender, response ) {
-			enyo.application.destoryTorrents( );
-			enyo.forEach( response.arguments.torrents, addTorrent , that );
-			that.running = false;
-			that.callback( "onTorrentsUpdated" );
+			if ( response.success ) {
+				enyo.application.destoryTorrents( );
+				enyo.forEach( response.arguments.torrents, addTorrent , that );
+				that.running = false;
+				that.callback( "onTorrentsUpdated" );
+			} else {
+				log( "Couldn't update torrents. Error " + response.message );
+			}
 		}
 
 		new enyo.Ajax( { url: "php/rpcconnection.php", method: "post" } )

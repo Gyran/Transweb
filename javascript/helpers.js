@@ -17,3 +17,14 @@ function bytesToSize(bytes) {
     var i = +Math.floor(Math.log(bytes) / Math.log(1024));
     return  (bytes / Math.pow(1024, i)).toFixed( i ? 1 : 0 ) + ' ' + sizes[ isNaN( bytes ) ? 0 : i+1 ];
 }
+
+function log( message, level ) {
+    if ( level === undefined ) {
+        level = 0;
+    }
+
+    if ( level === 0 ) {
+        alert( message );
+    } 
+
+}

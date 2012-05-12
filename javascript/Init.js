@@ -131,7 +131,7 @@ enyo.application = {
 }
 /* default preference */
 enyo.application.setPref( "torrentFilterFunction", Torrent.filterAll );
-enyo.application.setPref( "torrentCompareFunction", Torrent.compareByUploadRate );
+enyo.application.setPref( "torrentCompareFunction", Torrent.compareByAddedDate );
 /*****/
 
 enyo.kind({
@@ -157,8 +157,8 @@ enyo.kind({
 	},
 
 	getTransmissionSession: function(sender, response){
-		if(!response){
-			this.setContent("Could not connect to Transmission. Check settings and make sure Transmission is running.");
+		if( !response.success ){
+			this.setContent("Could not connect to Transmission. Check settings and make sure Transmission is running.\n Got error: " + response.message );
 		}else{
 			enyo.application.transmissionSession = new TransmissionSession( response.arguments );
 			this.init();

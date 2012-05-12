@@ -26,7 +26,11 @@ enyo.kind({
 				path: path });
 	},
 	
-	torrentAdded: function(sender, res){
-		this.bubble( "onAnnounceEvent", { event: "onHidePref" } );
+	torrentAdded: function ( sender, response ){
+		if ( response.success ) {
+			this.bubble( "onAnnounceEvent", { event: "onHidePref" } );
+		} else {
+			log( "Couldn't add torrent. Error: " + response.message );
+		}
 	}
 });

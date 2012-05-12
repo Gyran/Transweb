@@ -118,39 +118,44 @@ enyo.kind({
 
 	gotDetails: function( sender, response ) {
 		this.bubble( "onStopLoading" );
-		var torrent = response.arguments.torrents[0];
-		this.torrent = new Torrent( torrent );
 
-		// transfer fields
-		this.status();
-		this.downloaded();
-		this.downloadSpeed();
-		this.downloadLimit();
-		this.seeds();
-		this.tracker();
-		this.terror();
-		this.uploaded();
-		this.uploadSpeed();
-		this.uploadLimit();
-		this.leechers();
-		this.nextAnnounce();
-		this.remaining();
-		this.wasted();
-		this.ratio();
-		this.ratioLimit();
-		this.lastActivity();
+		if ( response.success ) {
+			var torrent = response.arguments.torrents[0];
+			this.torrent = new Torrent( torrent );
 
-		// torrent fields
-		this.fullpath( );
-		this.totalSize( );
-		this.hash( );
-		this.addedOn( );
-		this.createdOn( );
-		this.pieces( );
-		this.comment( );
-		this.completedOn( );
+			// transfer fields
+			this.status();
+			this.downloaded();
+			this.downloadSpeed();
+			this.downloadLimit();
+			this.seeds();
+			this.tracker();
+			this.terror();
+			this.uploaded();
+			this.uploadSpeed();
+			this.uploadLimit();
+			this.leechers();
+			this.nextAnnounce();
+			this.remaining();
+			this.wasted();
+			this.ratio();
+			this.ratioLimit();
+			this.lastActivity();
 
-		this.render( );
+			// torrent fields
+			this.fullpath( );
+			this.totalSize( );
+			this.hash( );
+			this.addedOn( );
+			this.createdOn( );
+			this.pieces( );
+			this.comment( );
+			this.completedOn( );
+
+			this.render( );
+		} else {
+			log( "Couldn't get torrent details. Error: " + response.message );
+		}
 	},
 
 	status: function () {
