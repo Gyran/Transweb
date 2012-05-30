@@ -26,5 +26,8 @@ function log( message, level ) {
     if ( level === 0 ) {
         alert( message );
     } 
+}
 
+function getDeadHeight( node ) {
+    return node.offsetHeight - node.clientHeight;
 }

@@ -1,3 +1,7 @@
+body {
+	overflow: hidden;
+}
+
 body, ul, li, p, tr, td, th, h1, h2, h3, h4 {
 	margin: 0;
 	padding: 0;
@@ -35,21 +39,22 @@ button {
 	border: 1px solid #BBB;
 }
 
-.selected {
-	background-color: #a7d6f1;
+.selected, .selected td {
+	background-color: #a7d6f1 !important;
 }
 
 /**** Columns ****/
 .leftColumn {
-	width: 200px;
-	height: 650px;
+	/*width: 200px;
+	height: 650px;*/
 	overflow: auto;
 	float: left;
 }
 
 .rightColumn {
 	float: left;
-	width: 1050px;
+	overflow: auto;
+	/*width: 1050px;*/
 }
 
 /**** Toolbar ****/
@@ -69,8 +74,8 @@ button {
 
 /**** TorrentTableHolder ****/
 .torrentTableHolder {
-	width 80%;
-	height: 300px;
+	/*width 80%;
+	height: 300px;*/
 	overflow: auto;
 }
 
@@ -115,6 +120,7 @@ button {
 /**** DetailsHolder ****/
 .detailsHolder {
 	border: 1px solid #000;
+	overflow: auto;
 }
 
 /**** Preference ****/
@@ -122,7 +128,7 @@ button {
 	border: 1px solid #000;
 	background-color: #CCC;
 	position: absolute;
-	width: 400px;
+	min-width: 400px;
 	left: 50%;
 	margin-left: -200px;
 	top: 100px;
@@ -220,4 +226,14 @@ button.closePrefButton {
 	top: 2px;
 }
 
+/**** SettingsPref ****/
+.settingsPref {
+	width: 600px;
+}
+
+.settingsPref .leftColumn {
+	height: 200px;
+	width: 150px;
+	background-color: #DDD;
+}
 

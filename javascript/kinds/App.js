@@ -6,12 +6,12 @@ enyo.kind({
 	classes: "app floatcontainer",
 
 	components: [
-		{ tag: "div", classes: "leftColumn",
+		{ name: "leftColumn", tag: "div", classes: "leftColumn",
 			components: [
 				{ name: "panel", kind: "Panel" }
 			] 
 		},
-		{ tag: "div", classes: "rightColumn",
+		{ name: "rightColumn", tag: "div", classes: "rightColumn",
 			components: [
 				{ name: "smallLoading", kind: "SmallLoading", showing: false },
 				{ name: "toolbar", kind: "Toolbar" },
@@ -30,7 +30,8 @@ enyo.kind({
         onStartLoading: "startLoading",
         onStopLoading: "stopLoading",
         onForceUpdate: "forceUpdate",
-        onAnnounceEvent: "announceEvent"
+        onAnnounceEvent: "announceEvent",
+        onresize: "resize"
     },
 
 	updateTimer: null,
@@ -44,7 +45,12 @@ enyo.kind({
 
 		this.update();
 
-		this.updateTimer = setInterval(enyo.bind(this, "waterfall", "onUpdate"), 5000);
+		//this.updateTimer = setInterval(enyo.bind(this, "waterfall", "onUpdate"), 5000);
+	},
+
+	rendered: function () {
+		this.inherited( arguments );
+		this.resize();
 	},
 
 	addUpdater: function ( updater ) {
@@ -89,6 +95,43 @@ enyo.kind({
 	updatersCallback: function ( event ) {
 		this.stopLoading();
 		this.waterfall( event );
+	},
+
+	resize: function ( sender,event ) {
+		var windowHeight = window.innerHeight;
+		var windowWidth = window.innerWidth; // - scrollbar
+
+		// leftColumn
+		var leftColumnWidth = Math.floor( windowWidth * 0.15 );
+		var leftColumnHeight = windowHeight;
+
+		this.$.leftColumn.applyStyle( "width", leftColumnWidth + "px" );
+		this.$.leftColumn.applyStyle( "height", leftColumnHeight + "px" );
+
+		// Right Column
+		var rightColumnWidth = windowWidth - leftColumnWidth;
+		var rightColumnHeight = windowHeight;
+
+		this.$.rightColumn.applyStyle( "width", rightColumnWidth + "px" );
+		this.$.rightColumn.applyStyle( "height", rightColumnHeight + "px" );
+
+		var h = rightColumnHeight;
+		var toolbarHeight = 24;
+		this.$.toolbar.applyStyle( "height", toolbarHeight + "px" );
+		h -= this.$.toolbar.getNodeProperty("offsetHeight", toolbarHeight);
+
+		h -= getDeadHeight(this.$.torrentTable.hasNode());
+		var torrentTableHeight = Math.floor( h * 0.6 );
+		this.$.torrentTable.applyStyle( "height", torrentTableHeight + "px" );
+		h -= this.$.torrentTable.getNodeProperty("offsetHeight", torrentTableHeight);
+
+		h -= getDeadHeight(this.$.detailsHolder.hasNode());
+		detailsHolderHeight = h;
+		this.$.detailsHolder.applyStyle( "height", detailsHolderHeight + "px" );
+
+		
+
+
 	}
 
 });
