@@ -98,7 +98,11 @@ enyo.kind({
 	},
 
 	statusChanged: function(){
-		this.$.status.setContent( this.torrent.getStatusString( ) );
+		if ( this.torrent.isError() ) {
+			this.$.status.setContent( "Error" );
+		} else {
+			this.$.status.setContent( this.torrent.getStatusString( ) );
+		}
 	},
 
 	rateUploadChanged: function(){

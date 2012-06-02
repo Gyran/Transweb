@@ -111,6 +111,7 @@ Torrent.prototype = {
 	getDownloadedEver: function () { return this._downloadedEver },
 	getDownloadLimit: function () { return this._downloadLimit },
 	getDownloadLimited: function () { return this._downloadLimited },
+	getError: function () { return this._error },
 	getErrorString: function () { return this._errorString },
 	getETA: function () { return this._eta },
 	getFiles: function () { return this._files },
@@ -192,6 +193,7 @@ Torrent.prototype = {
 	isDone: function () { return this.getLeftUntilDone() < 1 },
 	isActive: function () { return this.getRateUpload() + this.getRateDownload() },
 	isInactive: function () { return (this.getRateUpload() + this.getRateDownload() === 0) },
+	isError: function () { return this.getError() != 0 },
 
 	getStatusString: function () {
 		switch( this.getStatus() ) {
@@ -305,5 +307,9 @@ Torrent.filterActive = function( torrent ) {
 
 Torrent.filterInactive = function( torrent ) {
 	return torrent.isInactive();
+}
+
+Torrent.filterError = function( torrent ) {
+	return torrent.isError();
 }
 

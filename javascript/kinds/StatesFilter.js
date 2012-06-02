@@ -9,7 +9,8 @@ enyo.kind({
 		{ kind: "StateFilter", stateName: "Completed", filterFunction: Torrent.filterCompleted },
 		{ kind: "StateFilter", stateName: "Active", filterFunction: Torrent.filterActive },
 		{ kind: "StateFilter", stateName: "Inactive", filterFunction: Torrent.filterInactive },
-		{ kind: "StateFilter", stateName: "Stopped", filterFunction: Torrent.filterStopped }
+		{ kind: "StateFilter", stateName: "Stopped", filterFunction: Torrent.filterStopped },
+		{ kind: "StateFilter", stateName: "Error", filterFunction: Torrent.filterError }
 	]
 
 

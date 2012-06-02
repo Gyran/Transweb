@@ -7,7 +7,7 @@ require_once( dirname( __FILE__ ) . '/classes/CookiesManager.class.php' );
 $defaultTorrentFields = array( 
 	"addedDate", "name", "status", "doneDate", "haveValid", "totalSize", "uploadRatio",
 	"rateDownload", "rateUpload", "percentDone", "fileStats", "totalSize", "eta",
-	"downloadedEver", "leftUntilDone", "status", "hashString", "downloadDir", "trackerStats"
+	"downloadedEver", "leftUntilDone", "status", "hashString", "downloadDir", "trackerStats", "error"
 	);
 
 $torrentDetailsFields = array( 
@@ -118,6 +118,25 @@ switch( $_POST["method"] ) {
 		} else {
 			echo formatResponse( true, $result->arguments ); 
 		}
+		break;
+	case 'setFilePriority':
+		$file = $_POST["file"];
+		$priority = $_POST["priority"];
+		$arguments = array();
+		$result = null;
+
+		if ( $priority == -100 ) {
+			$arguments["files-unwanted"] = array( $file );
+			$result = $rpc->set( $_POST["torrents"], $arguments );
+			echo '<pre>';
+			print_r($result);
+			echo '</pre>';
+		} else {
+
+		}
+
+		
+
 		break;
 	default:
 		echo '<pre>';
