@@ -43,56 +43,59 @@ enyo.kind({
 	},
 
 	components: [
-		{ tag: "h2", content: "Transfer" },
+		{ name: "noselected", content: "No torrent selected", showing: "no" },
+		{ name: "details", components: [
+			{ tag: "h2", content: "Transfer" },
 
-		{ tag: "div", classes: "transfersCol floatcontainer",
-			components: [
-				{ name: "status", kind: "TorrentDetailsInfo", label: "Status:" },
-				{ name: "downloaded", kind: "TorrentDetailsInfo", label: "Downloaded:" },
-				{ name: "downloadSpeed", kind: "TorrentDetailsInfo", label: "Download Speed:" },
-				{ name: "downloadLimit", kind: "TorrentDetailsInfo", label: "Download limit:" },
-				{ name: "seeds", kind: "TorrentDetailsInfo", label: "Seeders:" },
-				{ name: "tracker", kind: "TorrentDetailsInfo", label: "Tracker:" }
-			]
-		},
-		{ tag: "div", classes: "transfersCol floatcontainer",
-			components: [
-				{ name: "terror", kind: "TorrentDetailsInfo", label: "Error:" },
-				{ name: "uploaded", kind: "TorrentDetailsInfo", label: "Uploaded:" },
-				{ name: "uploadSpeed", kind: "TorrentDetailsInfo", label: "Upload speed:" },
-				{ name: "uploadLimit", kind: "TorrentDetailsInfo", label: "Upload limit:" },
-				{ name: "leechers", kind: "TorrentDetailsInfo", label: "Leechers:" },
-				{ name: "nextAnnounce", kind: "TorrentDetailsInfo", label: "Next announce:" },
-			]
-		},
-		{ tag: "div", classes: "transfersCol floatcontainer",
-			components: [
-				{ name: "remaining", kind: "TorrentDetailsInfo", label: "Remaining:" },
-				{ name: "wasted", kind: "TorrentDetailsInfo", label: "Wasted:" },
-				{ name: "ratio", kind: "TorrentDetailsInfo", label: "Ratio:" },
-				{ name: "ratioLimit", kind: "TorrentDetailsInfo", label: "Ratio limit:" },
-				{ tag: "br" },
-				{ name: "lastActivity", kind: "TorrentDetailsInfo", label: "Last activity:" },
-			]
-		},
+			{ tag: "div", classes: "transfersCol floatcontainer",
+				components: [
+					{ name: "status", kind: "TorrentDetailsInfo", label: "Status:" },
+					{ name: "downloaded", kind: "TorrentDetailsInfo", label: "Downloaded:" },
+					{ name: "downloadSpeed", kind: "TorrentDetailsInfo", label: "Download Speed:" },
+					{ name: "downloadLimit", kind: "TorrentDetailsInfo", label: "Download limit:" },
+					{ name: "seeds", kind: "TorrentDetailsInfo", label: "Seeders:" },
+					{ name: "tracker", kind: "TorrentDetailsInfo", label: "Tracker:" }
+				]
+			},
+			{ tag: "div", classes: "transfersCol floatcontainer",
+				components: [
+					{ name: "terror", kind: "TorrentDetailsInfo", label: "Error:" },
+					{ name: "uploaded", kind: "TorrentDetailsInfo", label: "Uploaded:" },
+					{ name: "uploadSpeed", kind: "TorrentDetailsInfo", label: "Upload speed:" },
+					{ name: "uploadLimit", kind: "TorrentDetailsInfo", label: "Upload limit:" },
+					{ name: "leechers", kind: "TorrentDetailsInfo", label: "Leechers:" },
+					{ name: "nextAnnounce", kind: "TorrentDetailsInfo", label: "Next announce:" },
+				]
+			},
+			{ tag: "div", classes: "transfersCol floatcontainer",
+				components: [
+					{ name: "remaining", kind: "TorrentDetailsInfo", label: "Remaining:" },
+					{ name: "wasted", kind: "TorrentDetailsInfo", label: "Wasted:" },
+					{ name: "ratio", kind: "TorrentDetailsInfo", label: "Ratio:" },
+					{ name: "ratioLimit", kind: "TorrentDetailsInfo", label: "Ratio limit:" },
+					{ tag: "br" },
+					{ name: "lastActivity", kind: "TorrentDetailsInfo", label: "Last activity:" },
+				]
+			},
 
-		{ tag: "h2", content: "Torrent" },
-		{ name: "fullpath", kind: "TorrentDetailsInfo", label: "Fullpath:" },
-		{ tag: "div", classes: "torrentLeft",
-			components: [
-				{ name: "totalSize", kind: "TorrentDetailsInfo", label: "Total size:" },
-				{ name: "hash", kind: "TorrentDetailsInfo", label: "Hash:" },
-				{ name: "addedOn", kind: "TorrentDetailsInfo", label: "Added on:" },
-				{ name: "completedOn", kind: "TorrentDetailsInfo", label: "Completed on:" }
-			]
-		},
-		{ tag: "div", classes: "torrentRight",
-			components: [
-				{ name: "createdOn", kind: "TorrentDetailsInfo", label: "Created on:" },
-				{ name: "piece", kind: "TorrentDetailsInfo", label: "Pieces:" },
-				{ name: "comment", kind: "TorrentDetailsInfo", label: "Comment:" }
-			]
-		}
+			{ tag: "h2", content: "Torrent" },
+			{ name: "fullpath", kind: "TorrentDetailsInfo", label: "Fullpath:" },
+			{ tag: "div", classes: "torrentLeft",
+				components: [
+					{ name: "totalSize", kind: "TorrentDetailsInfo", label: "Total size:" },
+					{ name: "hash", kind: "TorrentDetailsInfo", label: "Hash:" },
+					{ name: "addedOn", kind: "TorrentDetailsInfo", label: "Added on:" },
+					{ name: "completedOn", kind: "TorrentDetailsInfo", label: "Completed on:" }
+				]
+			},
+			{ tag: "div", classes: "torrentRight",
+				components: [
+					{ name: "createdOn", kind: "TorrentDetailsInfo", label: "Created on:" },
+					{ name: "piece", kind: "TorrentDetailsInfo", label: "Pieces:" },
+					{ name: "comment", kind: "TorrentDetailsInfo", label: "Comment:" }
+				]
+			}
+		]}
 	],
 
 	published: {
@@ -107,12 +110,15 @@ enyo.kind({
 	update: function() {
 		var torrent = enyo.application.getSelectedTorrents()[0];
 		if( torrent !== undefined ) {
+			this.$.noselected.hide();
+			this.$.details.show();
 			this.bubble( "onStartLoading" );
 			new enyo.Ajax( { url: "php/rpcconnection.php", method: "post" } ).
 				response( this, "gotDetails" ).
 				go( { method: "getTorrentDetails", torrent: torrent } );
 		} else {
-			// TODO no torrent selected...
+			this.$.noselected.show();
+			this.$.details.hide();
 		}
 	},
 

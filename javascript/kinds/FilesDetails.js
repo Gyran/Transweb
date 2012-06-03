@@ -4,6 +4,7 @@ enyo.kind({
     tag: "div",
 
     components: [
+        { name: "noselected", content: "No torrent selected", showing: "no" },
         { name: "files", tag: "table", components: [
             { tag: "tr", components: [
                 { tag: "th", content: "Name" },
@@ -18,6 +19,7 @@ enyo.kind({
 
     create: function() {
         this.inherited( arguments );
+
         this.update();
     },
 
@@ -32,12 +34,15 @@ enyo.kind({
     update: function() {
         var torrent = enyo.application.getSelectedTorrents()[0];
         if( torrent !== undefined ) {
+            this.$.noselected.hide();
+            this.$.files.show();
             this.bubble( "onStartLoading" );
             new enyo.Ajax( { url: "php/rpcconnection.php", method: "post" } ).
                 response( this, "gotFiles" ).
                 go( { method: "getTorrentFiles", torrent: torrent } );
         } else {
-            // TODO no torrent selected...
+            this.$.noselected.show();
+            this.$.files.hide();
         }
     },
 

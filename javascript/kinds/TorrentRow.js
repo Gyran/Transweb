@@ -16,8 +16,8 @@ enyo.kind({
 		{ name: "uploadedEver", kind: "TorrentTableBodyCell" },
 		{ name: "uploadRatio", kind: "TorrentTableBodyCell" },
 		{ name: "addedDate", kind: "TorrentTableBodyCell" },
-		{ name: "rateUpload", kind: "TorrentTableBodyCell" },
 		{ name: "rateDownload", kind: "TorrentTableBodyCell" },
+		{ name: "rateUpload", kind: "TorrentTableBodyCell" },
 		{ name: "eta", kind: "TorrentTableBodyCell" }
 	],
 
