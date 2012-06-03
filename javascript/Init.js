@@ -6,17 +6,7 @@ enyo.application = {
 			loading: "Loading............"
 		},
 	selectedTorrents: [],
-	torrentColumns: [ { name: "Status", field: "status", compareFunction: Torrent.compareByStatus },
-						{ name: "Name", field: "torrentName", compareFunction: Torrent.compareByName }, 
-						{ name: "Size", field: "totalSize", compareFunction: Torrent.compareBySize }, 
-						{ name: "Done", field: "percentDone", compareFunction: Torrent.compareByDone },
-						{ name: "Downloaded", field: "sizeWhenDone", compareFunction: Torrent.compareByDownloaded },
-						{ name: "Ratio", field: "uploadRatio", compareFunction: Torrent.compareByRatio }, 
-						{ name: "Date Added", field: "addedDate", compareFunction: Torrent.compareByAddedDate },
-						{ name: "Upload rate", field: "rateUpload", compareFunction: Torrent.compareByUploadRate }, 
-						{ name: "Download rate", field: "rateDownload", compareFunction: Torrent.compareByDownloadRate },
-						{ name: "ETA", field: "eta", compareFunction: Torrent.compareByETA }
-					],
+
 /* Not used atm
 	_RatioUseGlobal        : 0,
 	_RatioUseLocal         : 1,
@@ -118,7 +108,7 @@ enyo.application = {
 	prefs: {
 		torrentCompareFunction: null,
 		torrentFilterFunction: null,
-		torrentSortDirection: this._PREF_SORT_ASC,
+		torrentSortDirection: 0,
 	},
 
 	getPref: function ( key ) {
@@ -132,6 +122,7 @@ enyo.application = {
 /* default preference */
 enyo.application.setPref( "torrentFilterFunction", Torrent.filterAll );
 enyo.application.setPref( "torrentCompareFunction", Torrent.compareByAddedDate );
+enyo.application.setPref( "torrentSortDirection", enyo.application._PREF_SORT_DESC );
 /*****/
 
 enyo.kind({

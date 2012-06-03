@@ -13,6 +13,7 @@ enyo.kind({
 		{ name: "totalSize", kind: "TorrentTableBodyCell" },
 		{ name: "percentDone", kind: "TorrentTableBodyCell" },
 		{ name: "downloadedEver", kind: "TorrentTableBodyCell" },
+		{ name: "uploadedEver", kind: "TorrentTableBodyCell" },
 		{ name: "uploadRatio", kind: "TorrentTableBodyCell" },
 		{ name: "addedDate", kind: "TorrentTableBodyCell" },
 		{ name: "rateUpload", kind: "TorrentTableBodyCell" },
@@ -54,6 +55,7 @@ enyo.kind({
 		this.totalSizeChanged( );
 		this.etaChanged( );
 		this.downloadedEverChanged( );
+		this.uploadedEverChanged( );
 	},
 
 	tap: function( sender, event ) {
@@ -93,7 +95,6 @@ enyo.kind({
 	},
 
 	addedDateChanged: function(){
-		//date = new Date( this.torrent.addedDate * 1000 );
 		this.$.addedDate.setContent( getDate( this.torrent.getAddedDate() ) );
 	},
 
@@ -123,7 +124,7 @@ enyo.kind({
 
 	etaChanged: function() {
 		if( !this.torrent.isStopped( ) && !this.torrent.isDone( ) ) {
-			if( this.eta < 0 ) {
+			if( this.torrent.getETA() < 0 ) {
 				this.$.eta.setContent( "Unknown" );
 			} else {
 				this.$.eta.setContent( enyo.application.getTimeFromSec( this.torrent.getETA() ) );
@@ -133,5 +134,10 @@ enyo.kind({
 
 	downloadedEverChanged: function() {
 		this.$.downloadedEver.setContent( enyo.application.getSizeUnit( this.torrent.getDownloadedEver() ) );
+	},
+
+	uploadedEverChanged: function() {
+		this.$.uploadedEver.setContent( enyo.application.getSizeUnit( this.torrent.getUploadedEver() ) );
 	}
+
 });

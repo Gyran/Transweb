@@ -253,11 +253,15 @@ Torrent.compareByDownloaded = function ( a, b ) {
 	return ( a.getDownloadedEver() - b.getDownloadedEver() );
 }
 
+Torrent.compareByUploaded = function ( a, b ) {
+	return ( a.getUploadedEver() - b.getUploadedEver() );
+}
+
 Torrent.compareByRatio = function ( a, b ) {
 	return ( a.getUploadRatio() - b.getUploadRatio() );
 }
 
-Torrent.compareByAddedDate = function ( a, b ) {
+Torrent.compareByDateAdded = function ( a, b ) {
 	return ( a.getAddedDate() - b.getAddedDate() );
 }
 
