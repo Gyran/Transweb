@@ -3,12 +3,14 @@ enyo.kind({
 	tag: "div",
 	classes: "panel",
 
-	components: [
+	create: function () {
+		this.inherited( arguments );
 
-		{ name: "statesFilter", kind: "StatesFilter" },
-		{ kind: "Divider" },
-		{ name: "foldersFilter", kind: "FoldersFilter" },
-		{ kind: "Divider" },
-        { name: "trackersFilter", kind: "TrackersFilter" }
-	]
+		var addComponent = function( component ) {
+			this.createComponent( component );
+
+		}
+
+		enyo.forEach( enyo.application.getPanelCompoents(), addComponent, this );
+	}
 });

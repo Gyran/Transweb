@@ -6,10 +6,7 @@ enyo.kind({
 	classes: "detailsHolder",
 
     components: [
-        { name: "tabs", tag: "ul", classes: "detailsTabs floatcontainer", ontap: "tabsTap", components: [
-            { kind: "DetailsTab", content: "Details", detailsKind: "TorrentDetails" },
-            { kind: "DetailsTab", content: "Files", detailsKind: "FilesDetails" }
-        ] },
+        { name: "tabs", tag: "ul", classes: "detailsTabs floatcontainer", ontap: "tabsTap" },
         { name: "holder", tag: "div" }
     ],
 
@@ -23,6 +20,13 @@ enyo.kind({
 
     create: function( ) {
         this.inherited( arguments );
+
+        var addComponent = function( component ) {
+            this.$.tabs.createComponent( component );
+        }
+
+        enyo.forEach( enyo.application.getDetailsCompoents(), addComponent, this );
+
         this.selectedTab = this.$.tabs.children[0];
         this.selectedTab.tap();
         this.update();

@@ -5,12 +5,14 @@ enyo.kind({
 
 	classes: "toolbar",
 
-	components: [
-		{ kind: "AddTorrentToolbarButton" },
-		{ kind: "StartTorrentToolbarButton" },
-		{ kind: "StopTorrentToolbarButton" },
-		{ kind: "CookiesToolbarButton" },
-		{ kind: "DeleteTorrentAndFilesToolbarButton" }
-		
-	]
+	create: function () {
+		this.inherited( arguments );
+
+		var addComponent = function( component ) {
+			this.createComponent( component );
+
+		}
+
+		enyo.forEach( enyo.application.getToolbarCompoents(), addComponent, this );
+	}
 })

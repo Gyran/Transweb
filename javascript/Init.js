@@ -22,8 +22,34 @@ enyo.application = {
 	_TrackerQueued         : 2,
 	_TrackerActive         : 3,
 */
+
 	_PREF_SORT_DESC        : 0,
 	_PREF_SORT_ASC         : 1,
+
+
+
+	/* list of components to add to certain places */
+	settingsComponents: [],
+	detailsComponents: [
+		{ kind: "DetailsTab", content: "Details", detailsKind: "TorrentDetails" },
+		{ kind: "DetailsTab", content: "Files", detailsKind: "FilesDetails" }
+	],
+	panelComponents: [
+		{ kind: "StatesFilter" },
+		{ kind: "Divider" },
+		{ kind: "FoldersFilter" },
+		{ kind: "Divider" },
+		{ kind: "TrackersFilter" }
+	],
+
+	toolbarComponents: [
+		{ kind: "AddTorrentToolbarButton" },
+		{ kind: "StartTorrentToolbarButton" },
+		{ kind: "StopTorrentToolbarButton" },
+		{ kind: "CookiesToolbarButton" },
+		{ kind: "DeleteTorrentAndFilesToolbarButton" },
+		{ kind: "SettingsToolbarButton" }
+	],
 
 	/* help functions */
 	getSpeedUnit: function( bytes ) {
@@ -117,7 +143,13 @@ enyo.application = {
 
 	setPref: function ( key, value ) {
 		this.prefs[key] = value;
-	}
+	},
+
+
+	getToolbarCompoents: function () { return this.toolbarComponents; },
+	getPanelCompoents: function () { return this.panelComponents; },
+	getDetailsCompoents: function () { return this.detailsComponents; }
+
 }
 /* default preference */
 enyo.application.setPref( "torrentFilterFunction", Torrent.filterAll );
@@ -165,7 +197,7 @@ enyo.kind({
 	},
 
 	initApp: function(){
-		app = new App();
+		var app = new App();
 		
 		app.renderInto(document.body);
 		this.destroy();
