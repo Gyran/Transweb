@@ -7,8 +7,6 @@ enyo.depends(
 	"TorrentTableHolder.js",
 	"SelectFolderInput.js",
 	"SmallLoading.js",
-	"CookiesToolbarButton.js",
-	"CookiesPref.js",
 	"AddTorrentPref.js",
 	"AddTorrentToolbarButton.js",
 	"StartTorrentToolbarButton.js",

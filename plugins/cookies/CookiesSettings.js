@@ -1,8 +1,8 @@
 enyo.kind({
-    name: "CookiesPref",
+    name: "CookiesSettings",
     kind: enyo.Control,
     tag: "div",
-    classes: "cookiesPref",
+    classes: "cookiesSettings",
 
     components: [
         { name: "cookiesStr", kind: enyo.TextArea, disabled: true, content: "Loading..." },
@@ -16,7 +16,7 @@ enyo.kind({
     },
 
     getCookies: function () {
-        new enyo.Ajax({url: "php/cookies.php", method: "post" }).
+        new enyo.Ajax({url: "plugins/Cookies/cookies.php", method: "post" }).
             response(this, "gotCookies").
             go({ method: "getCookies" });
     },
@@ -29,7 +29,7 @@ enyo.kind({
     saveCookies: function ( sender, response ) {
         var cookiesStr = this.$.cookiesStr.getValue();
 
-        new enyo.Ajax({url: "php/cookies.php", method: "post" }).
+        new enyo.Ajax({url: "plugins/cookies/cookies.php", method: "post" }).
             response(this, "cookiesSaved").
             go({ method: "saveCookies",
                 cookies: cookiesStr });
@@ -38,7 +38,8 @@ enyo.kind({
     },
 
     cookiesSaved: function ( sender, response ) {
-        
+        var event = { title: "Cookies saved", message: "The cookies has been saved to file" };
+        this.bubble( "onDoNotify", event );
     }
 
 });

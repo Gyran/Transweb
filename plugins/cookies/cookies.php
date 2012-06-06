@@ -1,7 +1,8 @@
 <?php
 
-require_once( dirname( __FILE__ ) . '/../config/config.php' );
-require_once( dirname( __FILE__ ) . '/classes/CookiesManager.class.php' );
+define( 'COOKIES_FILE' ,  dirname( __FILE__ ) . '/../../data/cookies' );
+
+require_once( dirname( __FILE__ ) . '/../../php/classes/CookiesManager.class.php' );
 
 try {
     $cm = new CookiesManager( COOKIES_FILE );    

@@ -141,7 +141,7 @@ button {
 }
 
 /**** CookiesPref ****/
-.cookiesPref textarea {
+.cookiesSettings textarea {
 	width: 100%;
 	height: 300px;
 
