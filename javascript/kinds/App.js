@@ -20,7 +20,8 @@ enyo.kind({
 				{ name: "detailsHolder", kind: "DetailsHolder" }
 			]
 		//{ kind: enyo.Signals, onkeydown: "keydown", onkeyup: "keyup" }
-		}
+		},
+		{ name: "notification", kind: "Notification" }
 	],
 
 	updaters: [ ],
@@ -31,6 +32,7 @@ enyo.kind({
         onStopLoading: "stopLoading",
         onForceUpdate: "forceUpdate",
         onAnnounceEvent: "announceEvent",
+        onDoNotify: "doNotify",
         onresize: "resize"
     },
 
@@ -99,7 +101,7 @@ enyo.kind({
 
 	resize: function ( sender,event ) {
 		var windowHeight = window.innerHeight;
-		var windowWidth = window.innerWidth; // - scrollbar
+		var windowWidth = window.innerWidth;
 
 		// leftColumn
 		var leftColumnWidth = Math.floor( windowWidth * 0.15 );
@@ -128,10 +130,17 @@ enyo.kind({
 		h -= getDeadHeight(this.$.detailsHolder.hasNode());
 		detailsHolderHeight = h;
 		this.$.detailsHolder.applyStyle( "height", detailsHolderHeight + "px" );
+	},
 
-		
-
-
+	doNotify: function ( sender, event ) {
+		this.$.notification.sendNotification({
+			title: event.title,
+			message: event.message,
+			theme: notification.MessageBar,
+			icon: null, // Get an icon
+			stay: false,
+			duration: 1
+		}, null);
 	}
 
 });

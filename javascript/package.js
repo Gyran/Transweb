@@ -1,6 +1,8 @@
 enyo.depends(
+    "enyo/",
 	"objects/",
 	"Init.js",
 	"helpers.js",
-	"kinds/"
+	"kinds/",
+    "../plugins/"
 );

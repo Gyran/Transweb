@@ -29,7 +29,10 @@ enyo.application = {
 
 
 	/* list of components to add to certain places */
-	settingsComponents: [],
+	settingsComponents: [
+		{ kind: "SettingsPrefItem", content: "Transweb" },
+		{ kind: "SettingsPrefItem", content: "Transmission" }
+	],
 	detailsComponents: [
 		{ kind: "DetailsTab", content: "Details", detailsKind: "TorrentDetails" },
 		{ kind: "DetailsTab", content: "Files", detailsKind: "FilesDetails" }
@@ -46,7 +49,6 @@ enyo.application = {
 		{ kind: "AddTorrentToolbarButton" },
 		{ kind: "StartTorrentToolbarButton" },
 		{ kind: "StopTorrentToolbarButton" },
-		{ kind: "CookiesToolbarButton" },
 		{ kind: "DeleteTorrentAndFilesToolbarButton" },
 		{ kind: "SettingsToolbarButton" }
 	],
@@ -146,9 +148,13 @@ enyo.application = {
 	},
 
 
-	getToolbarCompoents: function () { return this.toolbarComponents; },
-	getPanelCompoents: function () { return this.panelComponents; },
-	getDetailsCompoents: function () { return this.detailsComponents; }
+	getToolbarComponents: function () { return this.toolbarComponents; },
+	getPanelComponents: function () { return this.panelComponents; },
+	getDetailsComponents: function () { return this.detailsComponents; },
+	getSettingsComponents: function () { return this.settingsComponents; },
+
+	addToolbarComponent: function ( component ) { this.toolbarComponents.push( component );},
+	addSettingsComponent: function ( component ) { this.settingsComponents.push( component );}
 
 }
 /* default preference */

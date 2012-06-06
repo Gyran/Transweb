@@ -1,7 +1,7 @@
 enyo.kind({
     name: "SettingsPrefItem",
     kind: enyo.Control,
-    tag: "li"
+    tag: "li",
 });
 
 
@@ -13,10 +13,24 @@ enyo.kind({
     classes: "settingsPref",
 
     components: [
-        { classes: "leftColumn", tag: "ul", components: [
+        { name: "settingsPrefItems", classes: "leftColumn", tag: "ul" },
+        { name: "settingsView", classes: "rightColumn" }
+    ],
 
-        ]},
+    create: function () {
+        this.inherited( arguments );
 
-        { classes: "RightColumn" }
-    ]
+        var addComponent = function( component ) {
+            component.tap = enyo.bind( this, "showSettingsView" );
+            this.$.settingsPrefItems.createComponent( component );
+        }
+
+        enyo.forEach( enyo.application.getSettingsComponents(), addComponent, this );
+    },
+
+    showSettingsView: function( sender, event ) {
+        this.$.settingsView.destroyClientControls();
+        this.$.settingsView.createComponent( sender.viewComponent );
+        this.$.settingsView.render();
+    }
 });

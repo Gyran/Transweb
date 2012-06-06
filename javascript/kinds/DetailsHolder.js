@@ -25,7 +25,7 @@ enyo.kind({
             this.$.tabs.createComponent( component );
         }
 
-        enyo.forEach( enyo.application.getDetailsCompoents(), addComponent, this );
+        enyo.forEach( enyo.application.getDetailsComponents(), addComponent, this );
 
         this.selectedTab = this.$.tabs.children[0];
         this.selectedTab.tap();

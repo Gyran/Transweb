@@ -11,6 +11,6 @@ enyo.kind({
 
 		}
 
-		enyo.forEach( enyo.application.getPanelCompoents(), addComponent, this );
+		enyo.forEach( enyo.application.getPanelComponents(), addComponent, this );
 	}
 });

@@ -13,6 +13,6 @@ enyo.kind({
 
 		}
 
-		enyo.forEach( enyo.application.getToolbarCompoents(), addComponent, this );
+		enyo.forEach( enyo.application.getToolbarComponents(), addComponent, this );
 	}
 })
