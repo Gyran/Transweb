@@ -137,7 +137,7 @@ enyo.kind({
 			title: event.title,
 			message: event.message,
 			theme: notification.MessageBar,
-			icon: null, // Get an icon
+			icon: event.icon,
 			stay: false,
 			duration: 1
 		}, null);
