@@ -46,7 +46,6 @@ enyo.application = {
 	],
 
 	toolbarComponents: [
-		{ kind: "AddTorrentToolbarButton" },
 		{ kind: "StartTorrentToolbarButton" },
 		{ kind: "StopTorrentToolbarButton" },
 		{ kind: "DeleteTorrentAndFilesToolbarButton" },
