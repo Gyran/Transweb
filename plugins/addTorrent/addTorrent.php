@@ -1,5 +1,6 @@
 <?php
 require_once( dirname( __FILE__ ) . "/../../php/classes/RPCConnection.class.php" );
+require_once( dirname( __FILE__ ) . "/../../plugins/cookies/cookies.php" );
 
 $rpc =  new RPCConnection();
 
