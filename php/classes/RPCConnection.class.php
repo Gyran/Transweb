@@ -2,7 +2,7 @@
 
 require_once( dirname( __FILE__ ) . '/../../config/config.php' );
 require_once( dirname( __FILE__ ) . '/TransmissionRPC.class.php' );
-require_once( dirname( __FILE__ ) . '/CookiesManager.class.php' );
+require_once( dirname( __FILE__ ) . '/transweb.class.php' );
 
 class RPCConnection {
 
@@ -25,10 +25,13 @@ class RPCConnection {
 
         if ( !( stripos( $inUrl, "magnet:?", 0 ) === 0 ) ) {
             $url = parse_url( $inUrl );
-            $cm = new CookiesManager( COOKIES_FILE );
-            $cookies = $cm->getCookie( $url["host"] );
-            if ( $cookies ) {
-                $extra["cookies"] = $cookies;
+            if ( Transweb::pluginExists( "cookies" ) ) {
+                require_once( dirname( __FILE__ ) . '/../../plugins/cookies/Plugin_Cookies.class.php' );
+                $c = new Plugin_Cookies( );
+                $cookies = $c->getCookie( $url["host"] );
+                if ( $cookies ) {
+                    $extra["cookies"] = $cookies;
+                }
             }
         }
 

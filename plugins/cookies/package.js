@@ -1,4 +1,4 @@
 enyo.depends(
-    "CookiesSettings.js",
+    "kinds/CookiesSettings.js",
     "init.js"
 );

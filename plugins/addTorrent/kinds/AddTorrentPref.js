@@ -7,7 +7,12 @@ enyo.kind({
 	components: [
 		{ name: "downloadPath", kind: "SelectFolderInput" },
 		{ name: "link", kind: enyo.Input, placeholder: "URL to torrent", type: "text" },
-		{ name: "file", kind: "FileInput", accept: "application/x-bittorrent" },
+		{ tag: "div", components: [
+			{ tag: "label", components: [
+				{ name: "file", kind: "FileInput", accept: "application/x-bittorrent" },
+				{ tag: "span", content: "Torrent file" },
+				] }
+			] },
 		{ tag: "br" },
 		{ kind: enyo.Button, content: "Add torrent", ontap: "addTorrentTap" }
 	],
