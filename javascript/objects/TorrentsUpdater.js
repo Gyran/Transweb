@@ -29,8 +29,9 @@ TorrentsUpdater.prototype = {
 			}
 		}
 
-		new enyo.Ajax( { url: "php/rpcconnection.php", method: "post" } )
+		//new enyo.Ajax( { url: "php/rpcconnection.php", method: "post" } )
+		new enyo.Ajax( { url: "php/getTorrents.php" } )
 		.response( response )
-		.go( { method: "getAll" } );
+		.go( );
 	}
 }

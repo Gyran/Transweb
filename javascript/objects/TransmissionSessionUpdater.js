@@ -22,7 +22,7 @@ TransmissionSessionUpdater.prototype = {
 			}
 		}
 
-		new enyo.Ajax({url: "php/rpcconnection.php", method: "post" }).response( response ).go( { method: "transmissionSession" } );
+		new enyo.Ajax({url: "php/getTransmissionSession.php", method: "post" }).response( response ).go();
 	}
 	
 };

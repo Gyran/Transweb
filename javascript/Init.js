@@ -31,7 +31,6 @@ enyo.application = {
 	/* list of components to add to certain places */
 	settingsComponents: [
 		{ kind: "SettingsPrefItem", content: "Transweb" },
-		{ kind: "SettingsPrefItem", content: "Transmission" }
 	],
 	detailsComponents: [
 		{ kind: "DetailsTab", content: "Details", detailsKind: "TorrentDetails" },
@@ -105,6 +104,10 @@ enyo.application = {
 		return this.torrents;
 	},
 
+	getTransmissionSession: function () {
+		return this.transmissionSession;
+	},
+
 	destoryTorrents: function( ) {
 		this.torrents = [ ];
 	},
@@ -176,7 +179,7 @@ enyo.kind({
 	create: function(){
 		this.inherited(arguments);
 		// Is transmission running?
-		new enyo.Ajax({url: "php/rpcconnection.php", method: "post" }).response(this, "getTransmissionSession").go({method: "transmissionSession"});
+		new enyo.Ajax({url: "php/getTransmissionSession.php", method: "post" }).response(this, "gotTransmissionSession").go();
 
 	},
 
@@ -184,7 +187,7 @@ enyo.kind({
 		this.waitUntilReady();
 	},
 
-	getTransmissionSession: function(sender, response){
+	gotTransmissionSession: function(sender, response){
 		if( !response.success ){
 			this.setContent("Could not connect to Transmission. Check settings and make sure Transmission is running.\n Got error: " + response.message );
 		}else{

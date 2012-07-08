@@ -6,6 +6,13 @@ require_once( dirname( __FILE__ ) . '/transweb.class.php' );
 
 class RPCConnection {
 
+    private static $DEFAULTTORRENTFIELDS = array( 
+            "addedDate", "name", "status", "doneDate", "haveValid", "totalSize", "uploadRatio",
+            "rateDownload", "rateUpload", "percentDone", "fileStats", "totalSize", "eta",
+            "downloadedEver", "leftUntilDone", "status", "hashString", "downloadDir", "trackerStats", "error",
+            "uploadedEver"
+        );
+
     private $rpc;
     private $result;
     private $returnFormatted;
@@ -36,6 +43,19 @@ class RPCConnection {
         }
 
         $this->result = $this->rpc->add( $inUrl, $path, $extra );
+        return $this->formatResult();
+    }
+
+    public function getAllTorrents ( $fields = null ) {
+        if ( $fields === null ) {
+            $fields = self::$DEFAULTTORRENTFIELDS;
+        }
+        $this->result = $this->rpc->get( array(), $fields );
+        return $this->formatResult();
+    } 
+
+    public function getTransmissionSession () {
+        $this->result = $this->rpc->sget();
         return $this->formatResult();
     }
 
