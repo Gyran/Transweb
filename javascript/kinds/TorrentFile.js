@@ -14,11 +14,11 @@ enyo.kind({
         { name: "downloaded", tag: "td" },
         { name: "done", tag: "td" },
         { tag: "td", components: [
-            { name: "priority", kind: enyo.Select, components: [
+            { name: "priority", kind: enyo.Select, onchange: "priorityChanged", components: [
                 { content: FileStats._DONT_DOWNLOAD_NAME, value: FileStats._DONT_DOWNLOAD },
-                { content: FileStats._PRIORITY_LOW_NAME, value: FileStats.__PRIORITY_LOW },
-                { content: FileStats._PRIORITY_NORMAL_NAME, value: FileStats.__PRIORITY_NORMAL },
-                { content: FileStats._PRIORITY_HIGH_NAME, value: FileStats.__PRIORITY_HIGH }
+                { content: FileStats._PRIORITY_LOW_NAME, value: FileStats._PRIORITY_LOW },
+                { content: FileStats._PRIORITY_NORMAL_NAME, value: FileStats._PRIORITY_NORMAL },
+                { content: FileStats._PRIORITY_HIGH_NAME, value: FileStats._PRIORITY_HIGH }
             ] }
         ] }
     ],
@@ -52,7 +52,6 @@ enyo.kind({
     },
 
     priority: function () {
-        console.log(this.fileStats.getPriority());
         var select = 0;
         switch ( this.fileStats.getPriority() ) {
             case FileStats._PRIORITY_NORMAL:
@@ -68,7 +67,19 @@ enyo.kind({
                 break;
         }
         this.$.priority.setSelected( select );
+    },
+
+    priorityChanged: function ( sender, event ) {
+        priority = sender.getValue();
+        file = this.file.getName();
         
+        new enyo.Ajax({url: "php/rpcconnection.php", method: "post" }).response( null ).
+            go( { method: "setFilePriority",
+                file: this.file.getName(),
+                priority: sender.getValue(),
+                'torrents[]': enyo.application.getSelectedTorrents()
+                 } );
+
     }
 
 

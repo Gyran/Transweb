@@ -237,3 +237,8 @@ button.closePrefButton {
 	background-color: #DDD;
 }
 
+.settingsPref .rightColumn {
+	width: 400px;
+
+}
+

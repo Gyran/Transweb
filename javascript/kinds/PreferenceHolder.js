@@ -12,7 +12,7 @@ enyo.kind({
 
 	components: [
 		{ kind: enyo.Button, content: "X", ontap: "closePrefs", classes: "closePrefButton" },
-		{ name: "holder" }
+		{ name: "holder", classes: "floatcontainer" },
 	],
 
 	showPref: function( sender, args ) {

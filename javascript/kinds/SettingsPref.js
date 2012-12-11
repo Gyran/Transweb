@@ -10,7 +10,7 @@ enyo.kind({
     kind: enyo.Control,
     tag: "div",
 
-    classes: "settingsPref",
+    classes: "settingsPref floatcontainer",
 
     components: [
         { name: "settingsPrefItems", classes: "leftColumn", tag: "ul" },

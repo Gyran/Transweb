@@ -72,7 +72,13 @@ TransmissionSession.prototype = {
     getDownloadDir: function () { return this._download_dir },
     getSeedRatioLimit: function () { return this._seedRatioLimit },
     getSeedRatioLimited: function () { return this._seedRatioLimited },
-    getUnits: function () { return this._units }
+    getUnits: function () { return this._units },
+    getIncompleteDirEnabled: function () { return this._incomplete_dir_enabled },
+    getIncompleteDir: function () { return this._incomplete_dir },
+    getStartAddedTorrents: function () { return this._start_added_torrents },
+    getTrashOriginalTorrentFiles: function () { return this._trash_original_torrent_files },
+    getRenamePartialFiles: function () { return this._rename_partial_files },
+    
     /* /Getters */
 
 
