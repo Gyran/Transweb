@@ -279,7 +279,7 @@ Torrent.compareByETA = function ( a, b ) {
 
 // Sort torrents function
 Torrent.sortTorrents = function ( torrents, compareFunction, sortDirection ) {
-	torrents.sort( compareFunction );
+	torrents.sort( Torrent[compareFunction] );
 
 	if ( sortDirection === enyo.application._PREF_SORT_DESC ) {
 		torrents.reverse();
